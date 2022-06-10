@@ -1,21 +1,28 @@
 import java.util.Objects;
 
 public class Task {
-    String nameTask;
-    String taskDescription;
-    int id;
-    boolean isNew;
-    boolean isInProgress;
-    boolean isDone;
+    String name;
+    String description;
+    Integer id;
+    String status;
 
-    public Task(String nameTask, String taskDescription, int id) {
-        this.nameTask = nameTask;
-        this.taskDescription = taskDescription;
+    public Task(String name, String description, int id, String status) {
+        this.name = name;
+        this.description = description;
         this.id = id;
-        isNew =true;
-        isInProgress = false;
-        isDone = false;
+        this.status = status;
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNameTask() {
+        return name;
     }
 
     @Override
@@ -23,24 +30,20 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && isNew == task.isNew && isInProgress == task.isInProgress && isDone == task.isDone && Objects.equals(nameTask, task.nameTask) && Objects.equals(taskDescription, task.taskDescription);
+        return Objects.equals(name, task.name) && Objects.equals(description, task.description) && Objects.equals(id, task.id) && Objects.equals(status, task.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameTask, taskDescription, id, isNew, isInProgress, isDone);
+        return Objects.hash(name, description, id, status);
     }
 
     @Override
     public String toString() {
-        return "Task{" +
-                "nameTask='" + nameTask + '\'' +
-                ", taskDescription='" + taskDescription + '\'' +
-                ", id=" + id +
-                ", isNew=" + isNew +
-                ", isInProgress=" + isInProgress +
-                ", isDone=" + isDone +
-                '}';
+        return "Имя задачи - " + name +
+                "; Краткое описание - " + description +
+                "; Индекс - " + id +
+                "; Статус задачи - " + status;
     }
 }
 
