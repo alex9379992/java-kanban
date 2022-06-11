@@ -79,7 +79,7 @@ public class EpicManager {
         String nameEpic = scannerLine.nextLine();
         System.out.println("Введите короткое описание сложной задачи --->");
         String epicDescription = scannerLine.nextLine();
-        Epic epic = new Epic(nameEpic, epicDescription, id, "New");
+        Epic epic = new Epic(nameEpic, epicDescription, id);
         System.out.println("Эпик создан под индексом " + id);
         epics.put(epic.getId(), epic);
         System.out.println(epic);

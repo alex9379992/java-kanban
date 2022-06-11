@@ -11,7 +11,7 @@ public class TaskManager {
         String nameTask = scannerLine.nextLine();
         System.out.println("Введите краткое описание задачи ---> ");
         String taskDescription = scannerLine.nextLine();
-        Task task = new Task(nameTask, taskDescription, index, "New");
+        Task task = new Task(nameTask, taskDescription, index);
         System.out.println("Задача добавлена под индексом " + index + ".");
         System.out.println(task);
         tasks.put(task.getId(), task);
