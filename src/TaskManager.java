@@ -65,7 +65,7 @@ public class TaskManager {
                         "Done — задача выполнена.");
                 String newStatus = scanner.next();
                 if (newStatus.equals("New") || newStatus.equals("In_progress") || newStatus.equals("Done")) {
-                    tasks.get(index).status = newStatus;
+                    tasks.get(index).setStatus(newStatus);
                     System.out.println("Статус задачи изменен.");
                     break;
                 } else {
