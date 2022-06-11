@@ -51,7 +51,7 @@ public class EpicManager {
             boolean isFound = false;
             for (Integer epicNumber : epics.keySet()) {
                 Epic epic = epics.get(epicNumber);
-                if (epic.id == index) {
+                if (epic.getId() == index) {
                     isFound = true;
                     System.out.println(epic);
                 }
@@ -93,7 +93,7 @@ public class EpicManager {
                     String nameSubtask = scannerLine.nextLine();
                     System.out.println("Введите краткое описание подзадачи ---> ");
                     String subtaskDescription = scannerLine.nextLine();
-                    Subtask subtask = new Subtask(nameSubtask, subtaskDescription, idSubtask, "New", idEpic);
+                    Subtask subtask = new Subtask(nameSubtask, subtaskDescription, idSubtask, idEpic);
                     epics.get(epicNumber).getSubtaskData().put(idSubtask, subtask);
                     System.out.println("Подзадача создана под индексом " + idSubtask);
                     checkingEpicStatus(idEpic, idSubtask);
