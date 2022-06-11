@@ -23,8 +23,8 @@ public class EpicManager {
             System.out.println("Введите индекс подзадачи");
             int index = scanner.nextInt();
             for (Epic epic : epics.values()) {
-                for (Integer subtaskNumber : epic.subtaskData.keySet()) {
-                    Subtask subtask = epic.subtaskData.get(subtaskNumber);
+                for (Integer subtaskNumber : epic.getSubtaskData().keySet()) {
+                    Subtask subtask = epic.getSubtaskData().get(subtaskNumber);
                     if (subtask.id == index) {
                         System.out.println(subtask);
                     }
@@ -58,8 +58,8 @@ public class EpicManager {
             }
             for (Integer epicNumber : epics.keySet()) {
                 Epic epic = epics.get(epicNumber);
-                for (Integer subtaskNumber : epic.subtaskData.keySet()) {
-                    Subtask subtask = epic.subtaskData.get(subtaskNumber);
+                for (Integer subtaskNumber : epic.getSubtaskData().keySet()) {
+                    Subtask subtask = epic.getSubtaskData().get(subtaskNumber);
                     if (subtask.id == index) {
                         isFound = true;
                         System.out.println(subtask);
@@ -94,7 +94,7 @@ public class EpicManager {
                     System.out.println("Введите краткое описание подзадачи ---> ");
                     String subtaskDescription = scannerLine.nextLine();
                     Subtask subtask = new Subtask(nameSubtask, subtaskDescription, idSubtask, "New", idEpic);
-                    epics.get(epicNumber).subtaskData.put(idSubtask, subtask);
+                    epics.get(epicNumber).getSubtaskData().put(idSubtask, subtask);
                     System.out.println("Подзадача создана под индексом " + idSubtask);
                     checkingEpicStatus(idEpic, idSubtask);
                 }
@@ -111,19 +111,19 @@ public class EpicManager {
             while (true) {
                 System.out.println("Введите индекс сложной задачи:");
                 int idEpic = scanner.nextInt();
-                if (epics.get(idEpic).subtaskData.size() != 0) {
+                if (epics.get(idEpic).getSubtaskData().size() != 0) {
                     while (true) {
                         if (epics.containsKey(idEpic)) {
-                            System.out.println(epics.get(idEpic).subtaskData);
+                            System.out.println(epics.get(idEpic).getSubtaskData());
                             System.out.println("Введите индекс подзадачи, в которой хотите обновить статус:");
                             int idSubtask = scanner.nextInt();
-                            if (epics.get(idEpic).subtaskData.containsKey(idSubtask)) {
+                            if (epics.get(idEpic).getSubtaskData().containsKey(idSubtask)) {
                                 System.out.println("Введите новый статус");
                                 System.out.println("In progress — над задачей ведётся работа.\n" +
                                                    "Done — задача выполнена.");
                                 String newStatus = scannerLine.nextLine();
                                 if (newStatus.equals("In progress") || newStatus.equals("Done")) {
-                                    epics.get(idEpic).subtaskData.get(idSubtask).status = newStatus;
+                                    epics.get(idEpic).getSubtaskData().get(idSubtask).status = newStatus;
                                     System.out.println("Статус задачи изменен.");
                                     checkingEpicStatus(idEpic, idSubtask);
                                     return;
@@ -155,8 +155,8 @@ public class EpicManager {
             System.out.println("Сложная задача удалена.");
         }
         for (Integer keyEpic : epics.keySet()) {
-            if (epics.get(keyEpic).subtaskData.containsKey(index)) {
-                epics.get(keyEpic).subtaskData.remove(index);
+            if (epics.get(keyEpic).getSubtaskData().containsKey(index)) {
+                epics.get(keyEpic).getSubtaskData().remove(index);
                 System.out.println("Подзадача удалена.");
             }
         }
@@ -164,15 +164,15 @@ public class EpicManager {
 
     private void checkingEpicStatus ( int keyEpic, int keySubtask) {
         int sumDone = 0;
-        if (epics.get(keyEpic).subtaskData.get(keySubtask).status.equals("In progress")) {
+        if (epics.get(keyEpic).getSubtaskData().get(keySubtask).status.equals("In progress")) {
             epics.get(keyEpic).status = "In progress";
         }
-        for (Integer key : epics.get(keyEpic).subtaskData.keySet()) {
-            if (epics.get(keyEpic).subtaskData.get(key).status.equals("Done")) {
+        for (Integer key : epics.get(keyEpic).getSubtaskData().keySet()) {
+            if (epics.get(keyEpic).getSubtaskData().get(key).status.equals("Done")) {
                 sumDone += 1;
             }
         }
-        if(epics.get(keyEpic).subtaskData.size() == sumDone) {
+        if(epics.get(keyEpic).getSubtaskData().size() == sumDone) {
             epics.get(keyEpic).status = "Done";
         }
     }

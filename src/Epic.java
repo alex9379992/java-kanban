@@ -1,11 +1,12 @@
 import java.util.HashMap;
 
 public class Epic extends Task{
-    HashMap<Integer, Subtask> subtaskData = new HashMap<>();
+    private HashMap<Integer, Subtask> subtaskData = new HashMap<>();
 
 
-    public Epic(String name, String description, int id, String status) {
-        super(name, description, id, status);
+    public Epic(String name, String description, int id) {
+        super(name, description, id);
+        this.status = "New";
     }
 
     @Override
@@ -15,5 +16,9 @@ public class Epic extends Task{
                 "; Индекс - " + id +
                 "; Колличество подзадач - " + subtaskData.size() +
                 "; Статус задачи - " + status;
+    }
+
+    protected HashMap<Integer, Subtask> getSubtaskData() {
+        return subtaskData;
     }
 }
