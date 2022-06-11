@@ -2,9 +2,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class EpicManager {
-    HashMap<Integer, Epic> epics = new HashMap<>();
-    Scanner scanner = new Scanner(System.in);
-    Scanner scannerLine = new Scanner(System.in);
+    private HashMap<Integer, Epic> epics = new HashMap<>();
+    private Scanner scanner = new Scanner(System.in);
+    private Scanner scannerLine = new Scanner(System.in);
 
     protected void getEpics() {
         if (epics.size() != 0) {
