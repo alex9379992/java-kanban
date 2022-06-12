@@ -6,7 +6,7 @@ public class TaskManager {
     Scanner scanner = new Scanner(System.in);
     Scanner scannerLine = new Scanner(System.in);
 
-    protected void addTask(int index) {
+    public void addTask(int index) {
         System.out.println("Введите название задачи ---> ");
         String nameTask = scannerLine.nextLine();
         System.out.println("Введите краткое описание задачи ---> ");
@@ -17,7 +17,7 @@ public class TaskManager {
         tasks.put(task.getId(), task);
     }
 
-    protected void clearTasks() {
+    public void clearTasks() {
         if (tasks.size() != 0) {
             tasks.clear();
             System.out.println("Простые задачи удалены.");
@@ -26,7 +26,7 @@ public class TaskManager {
         }
     }
 
-    protected void getByIdTask() {
+    public void getByIdTask() {
         if (tasks.size() != 0) {
             System.out.println("Введите индекс задачи");
             int index = scanner.nextInt();
@@ -43,7 +43,7 @@ public class TaskManager {
         }
     }
 
-    protected void getTasks() {
+    public void getTasks() {
         if (tasks.size() != 0) {
             System.out.println("В классе простых задач, есть следующие задачи:");
             for (Integer taskNumber : tasks.keySet()) {
@@ -54,7 +54,7 @@ public class TaskManager {
         }
     }
 
-    protected void updateTask() {
+    public void updateTask() {
         while (true) {
             System.out.println("Введите индекс задачи");
             int index = scanner.nextInt();
@@ -78,7 +78,7 @@ public class TaskManager {
         }
     }
 
-    protected void removeTaskById() {
+    public void removeTaskById() {
         System.out.println("Введите индекс задачи");
         int index = scanner.nextInt();
         if (tasks.containsKey(index)) {
@@ -89,7 +89,7 @@ public class TaskManager {
         }
     }
 
-    protected void editTask() {
+    public void editTask() {
         if(tasks.size() != 0) {
             System.out.println("Введите индекс задачи, которую хотите изменить:");
             int index = scanner.nextInt();

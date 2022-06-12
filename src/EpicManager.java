@@ -17,7 +17,7 @@ public class EpicManager {
         }
     }
 
-    protected void getSubtaskForId() {
+    public void getSubtaskForId() {
         getEpics();
         if (epics.size() != 0) {
             System.out.println("Введите индекс подзадачи");
@@ -35,7 +35,7 @@ public class EpicManager {
         }
     }
 
-    protected void clearEpics() {
+    public void clearEpics() {
         if (epics.size() != 0) {
             epics.clear();
             System.out.println("Сложные задачи удалены.");
@@ -44,7 +44,7 @@ public class EpicManager {
         }
     }
 
-    protected void getByIdEpic() {
+    public void getByIdEpic() {
         if (epics.size() != 0) {
             System.out.println("Введите индекс");
             int index = scanner.nextInt();
@@ -74,7 +74,7 @@ public class EpicManager {
         }
     }
 
-    protected void addEpic(int id) {
+    public void addEpic(int id) {
         System.out.println("Введите название сложной задачи --->");
         String nameEpic = scannerLine.nextLine();
         System.out.println("Введите короткое описание сложной задачи --->");
@@ -85,7 +85,7 @@ public class EpicManager {
         System.out.println(epic);
     }
 
-    protected void addSubtask(int idEpic, int idSubtask) {
+    public void addSubtask(int idEpic, int idSubtask) {
         if (epics.size() != 0) {
             for (Integer epicNumber : epics.keySet()) {
                 if (epicNumber.equals(idEpic)) {
@@ -105,7 +105,7 @@ public class EpicManager {
 
     }
 
-    protected void updateSubtask() {
+    public void updateSubtask() {
         if (epics.size() != 0) {
             getEpics();
             while (true) {
@@ -147,7 +147,7 @@ public class EpicManager {
         }
     }
 
-    protected void removeById () {
+    public void removeById () {
         System.out.println("Введите индекс задачи");
         int index = scanner.nextInt();
         if (epics.containsKey(index)) {

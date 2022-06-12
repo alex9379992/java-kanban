@@ -4,11 +4,10 @@ import java.util.Objects;
 
 public class Subtask extends Task{
 
-    private int idEpic;
+    private final int idEpic;
 
     public Subtask(String name, String taskDescription, int id, int idEpic) {
         super(name, taskDescription, id);
-        this.status = "New";
         this.idEpic = idEpic;
     }
 
