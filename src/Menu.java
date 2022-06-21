@@ -70,22 +70,22 @@ public class Menu {
             printEpicMenu();
             int command = scanner.nextInt();
             if (command == 1) {
-                epicManager.getEpics();
+                epicManager.getList();
             } else if (command == 11) {
                 epicManager.getSubtaskForId();
             } else if (command == 2) {
-                epicManager.clearEpics();
+                epicManager.clear();
             } else if (command == 3) {
-                epicManager.getByIdEpic();
+                epicManager.getById();
             } else if (command == 4) {
                 epicManager.add(id.generator());
             } else if (command == 44) {
-                epicManager.getEpics();
+                epicManager.getList();
                 System.out.println("Введите индекс сложной задачи, в которую хотите добавить подзадачи:");
                 int idEpic = scanner.nextInt();
                 epicManager.addSubtask(idEpic, id.generator());
             } else if (command == 5) {
-                epicManager.updateSubtask();
+                epicManager.updateStatus();
             } else if (command == 6) {
                 epicManager.removeById();
             } else if (command == 7) {

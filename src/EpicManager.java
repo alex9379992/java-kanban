@@ -1,12 +1,13 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class EpicManager {
+public class EpicManager implements InterfaceManager{
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
     private Scanner scannerLine = new Scanner(System.in);
 
-    protected void getEpics() {
+    @Override
+    public void getList() {
         if (epics.size() != 0) {
             System.out.println("Вот список сложных задач:");
             for (Integer epicNumber : epics.keySet()) {
@@ -18,7 +19,7 @@ public class EpicManager {
     }
 
     public void getSubtaskForId() {
-        getEpics();
+        getList();
         if (epics.size() != 0) {
             System.out.println("Введите индекс подзадачи");
             int index = scanner.nextInt();
@@ -35,7 +36,8 @@ public class EpicManager {
         }
     }
 
-    public void clearEpics() {
+    @Override
+    public void clear() {
         if (epics.size() != 0) {
             epics.clear();
             System.out.println("Сложные задачи удалены.");
@@ -44,7 +46,8 @@ public class EpicManager {
         }
     }
 
-    public void getByIdEpic() {
+    @Override
+    public void getById() {
         if (epics.size() != 0) {
             System.out.println("Введите индекс");
             int index = scanner.nextInt();
@@ -74,6 +77,7 @@ public class EpicManager {
         }
     }
 
+    @Override
     public void add(int id) {
         System.out.println("Введите название сложной задачи --->");
         String nameEpic = scannerLine.nextLine();
@@ -105,9 +109,10 @@ public class EpicManager {
 
     }
 
-    public void updateSubtask() {
+    @Override
+    public void updateStatus() {
         if (epics.size() != 0) {
-            getEpics();
+            getList();
             while (true) {
                 System.out.println("Введите индекс сложной задачи:");
                 int idEpic = scanner.nextInt();
@@ -147,6 +152,7 @@ public class EpicManager {
         }
     }
 
+    @Override
     public void removeById () {
         System.out.println("Введите индекс задачи");
         int index = scanner.nextInt();
@@ -162,6 +168,7 @@ public class EpicManager {
         }
     }
 
+    @Override
     public void edit(){
         if(epics.size() != 0) {
             System.out.println("Введите индекс задачи, которую хотите изменить:");
