@@ -4,9 +4,9 @@ import java.util.Scanner;
 public class InMemoryTaskManager implements TaskManager {
 
     InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    Scanner scanner = new Scanner(System.in);
-    Scanner scannerLine = new Scanner(System.in);
+    private HashMap<Integer, Task> tasks = new HashMap<>();
+    private Scanner scanner = new Scanner(System.in);
+    private Scanner scannerLine = new Scanner(System.in);
 
     @Override
     public void add(int index) {

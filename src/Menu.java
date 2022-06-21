@@ -3,9 +3,8 @@ import java.util.Scanner;
 
 public class Menu {
 
-    InMemoryTaskManager taskManager = new InMemoryTaskManager();
-    InMemoryEpicManager epicManager = new InMemoryEpicManager();
-
+    TaskManager taskManager = Managers.getDefaultTaskManager();
+    InMemoryEpicManager epicManager = (InMemoryEpicManager) Managers.getDefaultEpicManager();
     ID id = new ID();
     Scanner scanner = new Scanner(System.in);
 
@@ -13,7 +12,7 @@ public class Menu {
         System.out.println("С какими типами задачь хотите произвести действия?");
         System.out.println("1 ---> Простые задачи.");
         System.out.println("2 ---> Сложные задачи. Задачи с несколькими подзадачами.");
-        System.out.println("3 ---> Выход.");
+        System.out.println("0 ---> Выход.");
     }
 
     private  void printTaskMenu() {

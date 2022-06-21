@@ -12,7 +12,7 @@ public class Main {
                menu.outputTaskMenu();
             } else if (command == 2) {
                menu.outputEpicMenu();
-            } else if (command == 3) {
+            } else if (command == 0) {
                 System.out.println("Программа завершена.");
                 break;
             } else {

@@ -2,8 +2,7 @@ import java.util.ArrayList;
 
 public class InMemoryHistoryManager implements HistoryManager  {
 
-    private ArrayList<Task> viewsHistory = new ArrayList<>();
-
+    private static ArrayList<Task> viewsHistory = new ArrayList<>();
 
     @Override
     public void add(Task task) {
