@@ -61,6 +61,7 @@ public class Menu {
         System.out.println("44 --> Добавить подзадачу в определенную сложную задачу");
         System.out.println("5 ---> Обновить статус подзадачи.");
         System.out.println("6 ---> Удалить по индексу.");
+        System.out.println("7 ---> Изменить задачу.");
         System.out.println("0 ---> Назад.");
     }
 
@@ -77,7 +78,7 @@ public class Menu {
             } else if (command == 3) {
                 epicManager.getByIdEpic();
             } else if (command == 4) {
-                epicManager.addEpic(id.generator());
+                epicManager.add(id.generator());
             } else if (command == 44) {
                 epicManager.getEpics();
                 System.out.println("Введите индекс сложной задачи, в которую хотите добавить подзадачи:");
@@ -87,7 +88,9 @@ public class Menu {
                 epicManager.updateSubtask();
             } else if (command == 6) {
                 epicManager.removeById();
-            } else if (command == 0) {
+            } else if (command == 7) {
+                epicManager.edit();
+            }else if (command == 0) {
                 break;
             } else {
                 System.out.println("Неверно введена команда.");

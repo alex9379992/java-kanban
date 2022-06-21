@@ -74,7 +74,7 @@ public class EpicManager {
         }
     }
 
-    public void addEpic(int id) {
+    public void add(int id) {
         System.out.println("Введите название сложной задачи --->");
         String nameEpic = scannerLine.nextLine();
         System.out.println("Введите короткое описание сложной задачи --->");
@@ -159,6 +159,25 @@ public class EpicManager {
                 epics.get(keyEpic).getSubtaskData().remove(index);
                 System.out.println("Подзадача удалена.");
             }
+        }
+    }
+
+    public void edit(){
+        if(epics.size() != 0) {
+            System.out.println("Введите индекс задачи, которую хотите изменить:");
+            int index = scanner.nextInt();
+            if (epics.containsKey(index)) {
+                add(index);
+                System.out.println("Сложная задача изменена.");
+            }
+            for (Integer keyEpic : epics.keySet()) {
+                if (epics.get(keyEpic).getSubtaskData().containsKey(index)) {
+                    addSubtask(keyEpic, index);
+                    System.out.println("Подзадача изменена.");
+                }
+            }
+        }  else {
+            System.out.println("Список сложных задач пуст.");
         }
     }
 
