@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class EpicManager implements InterfaceManager{
+public class InMemoryEpicManager implements InterfaceManager{
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
     private Scanner scannerLine = new Scanner(System.in);

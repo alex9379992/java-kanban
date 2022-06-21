@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Menu {
 
-    TaskManager taskManager = new TaskManager();
-    EpicManager epicManager = new EpicManager();
+    InMemoryTaskManager taskManager = new InMemoryTaskManager();
+    InMemoryEpicManager epicManager = new InMemoryEpicManager();
     ID id = new ID();
     Scanner scanner = new Scanner(System.in);
 

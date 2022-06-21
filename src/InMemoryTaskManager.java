@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class TaskManager implements InterfaceManager {
+public class InMemoryTaskManager implements InterfaceManager {
     HashMap<Integer, Task> tasks = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
     Scanner scannerLine = new Scanner(System.in);
