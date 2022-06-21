@@ -11,10 +11,10 @@ public class Epic extends Task{
     @Override
     public String toString() {
         return "Имя сложной задачи - " + name +
-                "; Краткое описание - " + description +
-                "; Индекс - " + id +
-                "; Колличество подзадач - " + subtaskData.size() +
-                "; Статус задачи - " + status;
+                ", Краткое описание - " + description +
+                ", Индекс - " + id +
+                ", Колличество подзадач - " + subtaskData.size() +
+                ", Статус задачи - " + status + ";";
     }
 
     protected HashMap<Integer, Subtask> getSubtaskData() {

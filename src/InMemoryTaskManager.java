@@ -2,6 +2,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class InMemoryTaskManager implements InterfaceManager {
+
+    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
     HashMap<Integer, Task> tasks = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
     Scanner scannerLine = new Scanner(System.in);
@@ -31,15 +33,20 @@ public class InMemoryTaskManager implements InterfaceManager {
     @Override
     public void getById() {
         if (tasks.size() != 0) {
+            boolean isFound = false;
             System.out.println("Введите индекс задачи");
             int index = scanner.nextInt();
+
             for (Integer taskNumber : tasks.keySet()) {
                 Task task = tasks.get(taskNumber);
                 if (task.id == index) {
                     System.out.println(task);
-                } else {
-                    System.out.println("По данному индексу, задача не обнаружена");
+                    isFound = true;
+                    historyManager.add(task);
                 }
+            }
+            if(!isFound) {
+                System.out.println("По данному индексу ничего не нашлось.");
             }
         } else {
             System.out.println("Список задач пуст.");
@@ -75,6 +82,7 @@ public class InMemoryTaskManager implements InterfaceManager {
                 } else if (command ==2) {
                     tasks.get(index).setStatus(Status.DONE);
                     System.out.println("Статус задачи изменен.");
+                    break;
                 } else {
                     System.out.println("Новый статус введен некорректно.");
                 }
@@ -109,6 +117,13 @@ public class InMemoryTaskManager implements InterfaceManager {
             }
         }  else {
             System.out.println("Список задач пуст.");
+        }
+    }
+
+    @Override
+    public void getHistory(){
+        for (Task task : historyManager.getHistory()) {
+            System.out.println(task);
         }
     }
 }

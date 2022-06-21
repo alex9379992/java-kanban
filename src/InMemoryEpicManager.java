@@ -2,6 +2,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class InMemoryEpicManager implements InterfaceManager{
+
+    InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
     private Scanner scannerLine = new Scanner(System.in);
@@ -54,6 +56,7 @@ public class InMemoryEpicManager implements InterfaceManager{
                 if (epic.getId() == index) {
                     isFound = true;
                     System.out.println(epic);
+                    historyManager.add(epic);
                 }
             }
             for (Integer epicNumber : epics.keySet()) {
@@ -63,6 +66,7 @@ public class InMemoryEpicManager implements InterfaceManager{
                     if (subtask.id == index) {
                         isFound = true;
                         System.out.println(subtask);
+                        historyManager.add(subtask);
                     }
                 }
             }
@@ -202,6 +206,13 @@ public class InMemoryEpicManager implements InterfaceManager{
         }
         if(epics.get(keyEpic).getSubtaskData().size() == sumDone) {
             epics.get(keyEpic).status = Status.DONE;
+        }
+    }
+
+    @Override
+    public void getHistory(){
+        for (Task task : historyManager.getHistory()) {
+            System.out.println(task);
         }
     }
 }

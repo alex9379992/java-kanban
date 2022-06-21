@@ -33,9 +33,9 @@ public class Task {
     @Override
     public String toString() {
         return "Имя задачи - " + name +
-                "; Краткое описание - " + description +
-                "; Индекс - " + id +
-                "; Статус задачи - " + status;
+                ", Краткое описание - " + description +
+                ", Индекс - " + id +
+                ", Статус задачи - " + status + ";";
     }
 
     public void setStatus(Status status) {

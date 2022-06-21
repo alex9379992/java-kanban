@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public interface InterfaceManager {
      void add(int index);
      void clear();
@@ -6,4 +8,5 @@ public interface InterfaceManager {
      void updateStatus();
      void removeById();
      void edit();
+     void getHistory();
 }

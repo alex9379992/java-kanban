@@ -13,9 +13,9 @@ public class Subtask extends Task{
     @Override
     public String toString() {
         return "Имя подзадачи = " + name +
-                "; Краткое описание = " + description + '\'' +
-                "; Номер = " + id +
-                "; Статус задачи - " + status + " .";
+                ", Краткое описание = " + description + '\'' +
+                ", Номер = " + id +
+                ", Статус задачи - " + status + ";";
     }
 
     @Override
