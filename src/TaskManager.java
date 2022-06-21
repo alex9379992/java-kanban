@@ -1,12 +1,13 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class TaskManager {
+public class TaskManager implements InterfaceManager {
     HashMap<Integer, Task> tasks = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
     Scanner scannerLine = new Scanner(System.in);
 
-    public void addTask(int index) {
+    @Override
+    public void add(int index) {
         System.out.println("Введите название задачи ---> ");
         String nameTask = scannerLine.nextLine();
         System.out.println("Введите краткое описание задачи ---> ");
@@ -17,7 +18,8 @@ public class TaskManager {
         tasks.put(task.getId(), task);
     }
 
-    public void clearTasks() {
+    @Override
+    public void clear() {
         if (tasks.size() != 0) {
             tasks.clear();
             System.out.println("Простые задачи удалены.");
@@ -26,7 +28,8 @@ public class TaskManager {
         }
     }
 
-    public void getByIdTask() {
+    @Override
+    public void getById() {
         if (tasks.size() != 0) {
             System.out.println("Введите индекс задачи");
             int index = scanner.nextInt();
@@ -43,7 +46,8 @@ public class TaskManager {
         }
     }
 
-    public void getTasks() {
+    @Override
+    public void getList() {
         if (tasks.size() != 0) {
             System.out.println("В классе простых задач, есть следующие задачи:");
             for (Integer taskNumber : tasks.keySet()) {
@@ -54,7 +58,8 @@ public class TaskManager {
         }
     }
 
-    public void updateTask() {
+    @Override
+    public void updateStatus() {
         while (true) {
             System.out.println("Введите индекс задачи");
             int index = scanner.nextInt();
@@ -78,7 +83,8 @@ public class TaskManager {
         }
     }
 
-    public void removeTaskById() {
+    @Override
+    public void removeById() {
         System.out.println("Введите индекс задачи");
         int index = scanner.nextInt();
         if (tasks.containsKey(index)) {
@@ -89,13 +95,14 @@ public class TaskManager {
         }
     }
 
-    public void editTask() {
+    @Override
+    public void edit() {
         if(tasks.size() != 0) {
             System.out.println("Введите индекс задачи, которую хотите изменить:");
             int index = scanner.nextInt();
             for(Integer keyTask : tasks.keySet()) {
                 if(tasks.get(keyTask).id.equals(index)) {
-                    addTask(index);
+                    add(index);
                 }
             }
         }  else {

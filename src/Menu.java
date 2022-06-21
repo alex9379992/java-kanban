@@ -30,19 +30,19 @@ public class Menu {
             printTaskMenu();
             int command = scanner.nextInt();
             if (command == 1) {
-                taskManager.getTasks();
+                taskManager.getList();
             } else if (command == 2) {
-                taskManager.clearTasks();
+                taskManager.clear();
             } else if (command == 3) {
-                taskManager.getByIdTask();
+                taskManager.getById();
             }else if (command == 4) {
-                taskManager.addTask(id.generator());
+                taskManager.add(id.generator());
             } else if (command == 5) {
-                taskManager.updateTask();
+                taskManager.updateStatus();
             } else if (command == 6) {
-                taskManager.removeTaskById();
+                taskManager.removeById();
             } else if (command == 7) {
-                taskManager.editTask();
+                taskManager.edit();
             } else if (command == 0) {
                 break;
             } else {
