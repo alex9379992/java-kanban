@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class InMemoryEpicManager implements InterfaceManager{
+public class InMemoryEpicManager implements TaskManager{
 
     InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
     private HashMap<Integer, Epic> epics = new HashMap<>();

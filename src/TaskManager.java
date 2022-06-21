@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-
-public interface InterfaceManager {
+public interface TaskManager {
      void add(int index);
      void clear();
      void getById();
