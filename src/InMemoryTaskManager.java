@@ -65,14 +65,16 @@ public class InMemoryTaskManager implements InterfaceManager {
             int index = scanner.nextInt();
             if (tasks.containsKey(index)) {
                 System.out.println("Введите новый статус");
-                System.out.println("New — задача только создана, но к её выполнению ещё не приступили.\n" +
-                        "In_progress — над задачей ведётся работа.\n" +
-                        "Done — задача выполнена.");
-                String newStatus = scanner.next();
-                if (newStatus.equals("New") || newStatus.equals("In_progress") || newStatus.equals("Done")) {
-                    tasks.get(index).setStatus(newStatus);
+                System.out.println("1 ---> IN_PROGRESS — над задачей ведётся работа.\n" +
+                                   "2 ---> DONE — задача выполнена.");
+                int command = scanner.nextInt();
+                if (command == 1) {
+                    tasks.get(index).setStatus(Status.IN_PROGRESS);
                     System.out.println("Статус задачи изменен.");
                     break;
+                } else if (command ==2) {
+                    tasks.get(index).setStatus(Status.DONE);
+                    System.out.println("Статус задачи изменен.");
                 } else {
                     System.out.println("Новый статус введен некорректно.");
                 }

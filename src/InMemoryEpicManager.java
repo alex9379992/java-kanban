@@ -21,15 +21,12 @@ public class InMemoryEpicManager implements InterfaceManager{
     public void getSubtaskForId() {
         getList();
         if (epics.size() != 0) {
-            System.out.println("Введите индекс подзадачи");
+            System.out.println("Введите индекс сложной задачи");
             int index = scanner.nextInt();
-            for (Epic epic : epics.values()) {
-                for (Integer subtaskNumber : epic.getSubtaskData().keySet()) {
-                    Subtask subtask = epic.getSubtaskData().get(subtaskNumber);
-                    if (subtask.id == index) {
-                        System.out.println(subtask);
-                    }
-                }
+            if(epics.containsKey(index)) {
+                System.out.println(epics.get(index).getSubtaskData());
+            } else {
+                System.out.println("Сложной задачи по данному индексу не обнаружено.");
             }
         } else {
             System.out.println("Список задач пуст.");
@@ -123,12 +120,17 @@ public class InMemoryEpicManager implements InterfaceManager{
                             System.out.println("Введите индекс подзадачи, в которой хотите обновить статус:");
                             int idSubtask = scanner.nextInt();
                             if (epics.get(idEpic).getSubtaskData().containsKey(idSubtask)) {
-                                System.out.println("Введите новый статус");
-                                System.out.println("In progress — над задачей ведётся работа.\n" +
-                                                   "Done — задача выполнена.");
-                                String newStatus = scannerLine.nextLine();
-                                if (newStatus.equals("In progress") || newStatus.equals("Done")) {
-                                    epics.get(idEpic).getSubtaskData().get(idSubtask).status = newStatus;
+                                System.out.println("Выберите новый статус");
+                                System.out.println("1 ---> IN_PROGRESS — над задачей ведётся работа.\n" +
+                                                   "2 ---> DONE — задача выполнена.");
+                                int command = scanner.nextInt();
+                                if (command == 1) {
+                                    epics.get(idEpic).getSubtaskData().get(idSubtask).status = Status.IN_PROGRESS;
+                                    System.out.println("Статус задачи изменен.");
+                                    checkingEpicStatus(idEpic, idSubtask);
+                                    return;
+                                } else if (command == 2) {
+                                    epics.get(idEpic).getSubtaskData().get(idSubtask).status = Status.DONE;
                                     System.out.println("Статус задачи изменен.");
                                     checkingEpicStatus(idEpic, idSubtask);
                                     return;
@@ -190,16 +192,16 @@ public class InMemoryEpicManager implements InterfaceManager{
 
     private void checkingEpicStatus ( int keyEpic, int keySubtask) {
         int sumDone = 0;
-        if (epics.get(keyEpic).getSubtaskData().get(keySubtask).status.equals("In progress")) {
-            epics.get(keyEpic).status = "In progress";
+        if (epics.get(keyEpic).getSubtaskData().get(keySubtask).status.equals(Status.IN_PROGRESS)) {
+            epics.get(keyEpic).status = Status.IN_PROGRESS;
         }
         for (Integer key : epics.get(keyEpic).getSubtaskData().keySet()) {
-            if (epics.get(keyEpic).getSubtaskData().get(key).status.equals("Done")) {
+            if (epics.get(keyEpic).getSubtaskData().get(key).status.equals(Status.DONE)) {
                 sumDone += 1;
             }
         }
         if(epics.get(keyEpic).getSubtaskData().size() == sumDone) {
-            epics.get(keyEpic).status = "Done";
+            epics.get(keyEpic).status = Status.DONE;
         }
     }
 }

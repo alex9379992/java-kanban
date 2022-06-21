@@ -4,13 +4,13 @@ public class Task {
     protected String name;
     protected String description;
     protected Integer id;
-    protected String status;
+    protected Status status;
 
     public Task(String name, String description, int id) {
         this.name = name;
         this.description = description;
         this.id = id;
-        this.status = "New";
+        this.status = Status.NEW;
     }
 
     public int getId() {
@@ -38,7 +38,7 @@ public class Task {
                 "; Статус задачи - " + status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }
