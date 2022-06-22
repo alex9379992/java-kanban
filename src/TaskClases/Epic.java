@@ -1,6 +1,8 @@
+package TaskClases;
+
 import java.util.HashMap;
 
-public class Epic extends Task{
+public class Epic extends Task {
     private HashMap<Integer, Subtask> subtaskData = new HashMap<>();
 
 
@@ -17,7 +19,9 @@ public class Epic extends Task{
                 ", Статус задачи - " + status + ";";
     }
 
-    protected HashMap<Integer, Subtask> getSubtaskData() {
+    public HashMap<Integer, Subtask> getSubtaskData() {
         return subtaskData;
     }
+
+
 }

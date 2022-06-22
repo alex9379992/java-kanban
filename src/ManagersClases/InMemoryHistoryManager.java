@@ -1,6 +1,9 @@
+package ManagersClases;
+import TaskClases.Task;
+
 import java.util.ArrayList;
 
-public class InMemoryHistoryManager implements HistoryManager  {
+public class InMemoryHistoryManager implements HistoryManager {
 
     private static ArrayList<Task> viewsHistory = new ArrayList<>();
 
@@ -19,7 +22,6 @@ public class InMemoryHistoryManager implements HistoryManager  {
     public ArrayList<Task> getHistory() {
         if(viewsHistory.isEmpty()) {
             System.out.println("Список истории задач пуст");
-
         }
         return viewsHistory;
     }

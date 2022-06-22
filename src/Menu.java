@@ -1,11 +1,8 @@
-import java.util.ArrayList;
+//Убрал до лучших времен.
 import java.util.Scanner;
 
 public class Menu {
 
-    TaskManager taskManager = Managers.getDefaultTaskManager();
-    InMemoryEpicManager epicManager = (InMemoryEpicManager) Managers.getDefaultEpicManager();
-    ID id = new ID();
     Scanner scanner = new Scanner(System.in);
 
     protected void printMainMenu() {
@@ -32,21 +29,21 @@ public class Menu {
             printTaskMenu();
             int command = scanner.nextInt();
             if (command == 1) {
-                taskManager.getList();
+
             } else if (command == 2) {
-                taskManager.clear();
+
             } else if (command == 3) {
-                taskManager.getById();
+
             }else if (command == 4) {
-                taskManager.add(id.generator());
+
             } else if (command == 5) {
-                taskManager.updateStatus();
+
             } else if (command == 6) {
-                taskManager.removeById();
+
             } else if (command == 7) {
-                taskManager.edit();
+
             } else if (command == 8) {
-                taskManager.getHistory();
+
             } else if (command == 0) {
                 break;
             } else {
@@ -75,28 +72,27 @@ public class Menu {
             printEpicMenu();
             int command = scanner.nextInt();
             if (command == 1) {
-                epicManager.getList();
+
             } else if (command == 11) {
-                epicManager.getSubtaskForId();
+
             } else if (command == 2) {
-                epicManager.clear();
+
             } else if (command == 3) {
-                epicManager.getById();
+
             } else if (command == 4) {
-                epicManager.add(id.generator());
+
             } else if (command == 44) {
-                epicManager.getList();
-                System.out.println("Введите индекс сложной задачи, в которую хотите добавить подзадачи:");
-                int idEpic = scanner.nextInt();
-                epicManager.addSubtask(idEpic, id.generator());
+
+
+
             } else if (command == 5) {
-                epicManager.updateStatus();
+
             } else if (command == 6) {
-                epicManager.removeById();
+
             } else if (command == 7) {
-                epicManager.edit();
+
             } else if (command == 8) {
-                epicManager.getHistory();
+
             } else if (command == 0) {
                 break;
             } else {

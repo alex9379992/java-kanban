@@ -1,3 +1,6 @@
+package TaskClases;
+
+import java.io.ObjectInputFilter;
 import java.util.Objects;
 
 public class Task {
@@ -25,10 +28,7 @@ public class Task {
         return Objects.equals(name, task.name) && Objects.equals(description, task.description) && Objects.equals(id, task.id) && Objects.equals(status, task.status);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description, id, status);
-    }
+
 
     @Override
     public String toString() {
@@ -40,6 +40,18 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }
 

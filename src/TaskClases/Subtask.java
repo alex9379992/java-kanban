@@ -1,7 +1,9 @@
+package TaskClases;
+
 import java.util.Objects;
 
 
-public class Subtask extends Task{
+public class Subtask extends Task {
 
     private final int idEpic;
 
@@ -25,10 +27,5 @@ public class Subtask extends Task{
         if (!super.equals(o)) return false;
         Subtask subtask = (Subtask) o;
         return idEpic == subtask.idEpic;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), idEpic);
     }
 }
