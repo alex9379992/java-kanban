@@ -10,11 +10,11 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void add(Task task) {
         if(viewsHistory.size() < 10) {
-            viewsHistory.add(0, (Task) task);
+            viewsHistory.add(0,  task);
         }
         if(viewsHistory.size() >= 10) {
-            viewsHistory.add(0, (Task) task);
-            viewsHistory.remove(11);
+            viewsHistory.add(0,  task);
+            viewsHistory.remove(10);
         }
     }
 
