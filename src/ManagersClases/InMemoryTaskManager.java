@@ -15,6 +15,7 @@ public class InMemoryTaskManager implements TaskManager {
     private Map<Integer, Task> tasks = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
+
     @Override
     public Map<Integer, Task> getTasks() {
         if (tasks.size() == 0) {
@@ -29,7 +30,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (!tasks.containsKey(id)) {
             System.out.println("По данному индексу ничего не нашлось.");
         }
-        historyManager.add(tasks.get(id));
+        historyManager.addTask(tasks.get(id));
         return tasks.get(id);
     }
 
@@ -95,7 +96,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epics.containsKey(id)) {
             System.out.println("По данному индексу ничего не нашлось.");
         }
-        historyManager.add(epics.get(id));
+        historyManager.addTask(epics.get(id));
         return epics.get(id);
     }
 
@@ -168,14 +169,14 @@ public class InMemoryTaskManager implements TaskManager {
         if (!epics.containsKey(epicId) && !epics.get(epicId).getSubtaskData().containsKey(id)) {
             System.out.println("По веденному индексу, подзадача не нашлась.");
         }
-        historyManager.add(epics.get(epicId).getSubtaskData().get(id));
+        historyManager.addTask(epics.get(epicId).getSubtaskData().get(id));
         return epics.get(epicId).getSubtaskData().get(id);
     }
 
     @Override
     public int addNewSubtask(Subtask subtask, int idEpic) {
         epics.get(idEpic).getSubtaskData().put(subtask.getId(), subtask);
-        System.out.println("Подзадача " + subtask.getName() + "с индексом " + subtask.getId() +
+        System.out.println("Подзадача " + subtask.getName() + ", с индексом " + subtask.getId() +
                 ", добавлена в " + epics.get(idEpic).getName());
         updateEpic(epics.get(idEpic));
         return subtask.getId();

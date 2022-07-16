@@ -2,13 +2,15 @@ package ManagersClases;
 
 import TaskClases.Task;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface HistoryManager <T extends Task> {
 
 
-    void add(Task task);
+   void addTask(Task task);
 
-    ArrayList<T> getHistory();
+    void remove(int id);
+
+    List<Task> getHistory();
 
 }
