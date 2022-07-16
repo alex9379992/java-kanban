@@ -1,5 +1,7 @@
-package ManagersClases;
+package Managers;
 
+import Interfaces.HistoryManager;
+import Interfaces.TaskManager;
 import TaskClases.Epic;
 import TaskClases.Status;
 import TaskClases.Subtask;

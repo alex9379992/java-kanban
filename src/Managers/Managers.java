@@ -1,4 +1,7 @@
-package ManagersClases;
+package Managers;
+
+import Interfaces.HistoryManager;
+import Interfaces.TaskManager;
 
 public final class Managers <T extends TaskManager>{
 

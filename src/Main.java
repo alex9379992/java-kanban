@@ -1,5 +1,5 @@
-import ManagersClases.Managers;
-import ManagersClases.TaskManager;
+import Managers.Managers;
+import Interfaces.TaskManager;
 import TaskClases.Epic;
 import TaskClases.Subtask;
 import TaskClases.Task;
@@ -34,11 +34,13 @@ public class Main {
         manager.getEpic(0);
         System.out.println("");
         List<Task> historyList = manager.getHistory();
+
         for (int i = 0; i < historyList.size(); i++) {
             System.out.println(historyList.get(i));
         }
 
         manager.deleteEpic(0);
+
         for (int i = 0; i < historyList.size(); i++) {
             System.out.println(historyList.get(i));
         }

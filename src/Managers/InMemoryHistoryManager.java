@@ -1,4 +1,5 @@
-package ManagersClases;
+package Managers;
+import Interfaces.HistoryManager;
 import TaskClases.Task;
 
 import java.util.*;
@@ -27,6 +28,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                 }
             }
         }
+        Collections.reverse(tasks);
         return tasks;
     }
 
