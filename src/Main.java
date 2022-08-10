@@ -1,8 +1,8 @@
 import Managers.Managers;
 import Interfaces.TaskManager;
-import TaskClases.Epic;
-import TaskClases.Subtask;
-import TaskClases.Task;
+import Tasks.Epic;
+import Tasks.Subtask;
+import Tasks.Task;
 
 import java.util.List;
 

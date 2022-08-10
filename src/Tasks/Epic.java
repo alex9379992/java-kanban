@@ -1,4 +1,4 @@
-package TaskClases;
+package Tasks;
 
 import java.util.HashMap;
 

@@ -1,6 +1,5 @@
-package TaskClases;
+package Tasks;
 
-import java.io.ObjectInputFilter;
 import java.util.Objects;
 
 public class Task {
@@ -32,10 +31,12 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Имя задачи - " + name +
-                ", Краткое описание - " + description +
-                ", Индекс - " + id +
-                ", Статус задачи - " + status + ";";
+        return  getId() + ","
+                + getClass() + ","
+                + getName() + ","
+                + getStatus() + ","
+                + getDescription()
+                + "\n";
     }
 
     public void setStatus(Status status) {

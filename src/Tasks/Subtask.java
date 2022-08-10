@@ -1,6 +1,4 @@
-package TaskClases;
-
-import java.util.Objects;
+package Tasks;
 
 
 public class Subtask extends Task {
@@ -14,10 +12,13 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "Имя подзадачи = " + name +
-                ", Краткое описание = " + description + '\'' +
-                ", Номер = " + id +
-                ", Статус задачи - " + status + ";";
+        return getId() + ","
+                + getClass() + ","
+                + getName() + ","
+                + getStatus() + ","
+                + getDescription() + ","
+                + getIdEpic()
+                + "\n";
     }
 
     @Override
@@ -27,5 +28,9 @@ public class Subtask extends Task {
         if (!super.equals(o)) return false;
         Subtask subtask = (Subtask) o;
         return idEpic == subtask.idEpic;
+    }
+
+    public int getIdEpic() {
+        return idEpic;
     }
 }

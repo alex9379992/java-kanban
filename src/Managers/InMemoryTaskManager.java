@@ -2,20 +2,20 @@ package Managers;
 
 import Interfaces.HistoryManager;
 import Interfaces.TaskManager;
-import TaskClases.Epic;
-import TaskClases.Status;
-import TaskClases.Subtask;
-import TaskClases.Task;
+import Tasks.Epic;
+import Tasks.Status;
+import Tasks.Subtask;
+import Tasks.Task;
 
 import java.util.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
 
-    private HistoryManager historyManager = Managers.getDefaultHistoryManager();
-    private Map<Integer, Epic> epics = new HashMap<>();
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private Scanner scanner = new Scanner(System.in);
+    protected HistoryManager historyManager = Managers.getDefaultHistoryManager();
+    protected Map<Integer, Epic> epics = new HashMap<>();
+    protected Map<Integer, Task> tasks = new HashMap<>();
+    protected Scanner scanner = new Scanner(System.in);
 
 
     @Override

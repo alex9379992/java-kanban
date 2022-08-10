@@ -1,8 +1,8 @@
 package Interfaces;
 
-import TaskClases.Epic;
-import TaskClases.Subtask;
-import TaskClases.Task;
+import Tasks.Epic;
+import Tasks.Subtask;
+import Tasks.Task;
 
 import java.util.List;
 import java.util.Map;

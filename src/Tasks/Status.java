@@ -1,4 +1,4 @@
-package TaskClases;
+package Tasks;
 
 public enum Status {
     NEW,
