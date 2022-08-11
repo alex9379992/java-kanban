@@ -13,4 +13,5 @@ public interface HistoryManager <T extends Task> {
 
     List<Task> getHistory();
 
+    int getSize();
 }

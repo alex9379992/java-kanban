@@ -8,10 +8,15 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private Node head;
     private Node tail;
+    private  int size = 0;
 
    private Map<Integer, Node> nodeData = new HashMap<>();
 
-   @Override
+    public int getSize() {
+        return size;
+    }
+
+    @Override
    public List<Task> getHistory() {
        return getTasks();
    }
@@ -43,6 +48,7 @@ public class InMemoryHistoryManager implements HistoryManager {
            } else {
                linkLast(task);
                nodeData.put(id, tail);
+               size++;
            }
        }
    }
@@ -68,17 +74,21 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (node != null) {
             if (node.next != null && node.prev == null) {  //если в начале
                 head = node.next;
+                size--;
             }
             if (node.next != null && node.prev != null) {  //если в середине
                 node.prev.next = node.next;
                 node.next.prev = node.prev;
+                size--;
             }
             if (node.next == null && node.prev != null) {  //если в конце
                 tail = node.prev;
+                size--;
             }
             if (node.next == null && node.prev == null) {  //если единственный элемент
                 head = null;
                 tail = null;
+                size--;
             }
         } else {
             System.out.println("Узел отсуттвует.");
