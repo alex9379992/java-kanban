@@ -11,7 +11,7 @@ import java.util.Map;
 public class FileBackedTasksManager extends InMemoryTaskManager {
     public static void main(String[] args) {
         writingToFile(); //работа приложения, при записи в файл.
-        readingToFile();   //работа приложения при считывании изи файла.
+        readingToFile();   //работа приложения при считывании из файла.
     }
 
     @Override
@@ -121,14 +121,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         try (Writer fileWriter = new FileWriter("resources/dataSave.CSV")) {
             fileWriter.write(FormatCSV.recordingFields());
             for (Task task : tasks.values()) {
-                fileWriter.write(FormatCSV.toString(task));
+                fileWriter.write(FormatCSV.toStringCSV(task));
             }
             for (Epic epic : epics.values()) {
-                fileWriter.write(FormatCSV.toString(epic));
+                fileWriter.write(FormatCSV.toStringCSV(epic));
             }
             for (Epic epic : epics.values()) {
                 for (Subtask subtask : epic.getSubtaskData().values()) {
-                    fileWriter.write(FormatCSV.toString(subtask));
+                    fileWriter.write(FormatCSV.toStringCSV(subtask));
                 }
             }
             fileWriter.write(System.lineSeparator());

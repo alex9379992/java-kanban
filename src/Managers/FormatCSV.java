@@ -46,7 +46,7 @@ public class FormatCSV {
         }
     }
 
-    public static String toString(Task task) {
+    public static String toStringCSV(Task task) {
         return  task.getId() + ","
                 + TaskType.TASK + ","
                 + task.getName() + ","
@@ -55,7 +55,7 @@ public class FormatCSV {
                 + "\n";
     }
 
-    public static String toString(Subtask subtask) {
+    public static String toStringCSV(Subtask subtask) {
         return   subtask.getId() + ","
                 + TaskType.SUBTASK + ","
                 + subtask.getName() + ","
@@ -65,7 +65,7 @@ public class FormatCSV {
                 + "\n";
     }
 
-    public static String toString(Epic epic) {
+    public static String toStringCSV(Epic epic) {
         return   epic.getId() + ","
                 + TaskType.EPIC + ","
                 + epic.getName() + ","
