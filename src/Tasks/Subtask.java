@@ -12,13 +12,11 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return getId() + ","
-                + getClass() + ","
-                + getName() + ","
-                + getStatus() + ","
-                + getDescription() + ","
-                + getIdEpic()
-                + "\n";
+       return  "Имя подзадачи - " + name +
+                ", Краткое описание - " + description +
+                ", Индекс - " + id +
+                "Индекс эпика - " + idEpic +
+                ", Статус задачи - " + status + ";";
     }
 
     @Override
@@ -32,5 +30,10 @@ public class Subtask extends Task {
 
     public int getIdEpic() {
         return idEpic;
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
     }
 }

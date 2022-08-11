@@ -31,12 +31,10 @@ public class Task {
 
     @Override
     public String toString() {
-        return  getId() + ","
-                + getClass() + ","
-                + getName() + ","
-                + getStatus() + ","
-                + getDescription()
-                + "\n";
+        return  "Имя задачи - " + name +
+                ", Краткое описание - " + description +
+                ", Индекс - " + id +
+                ", Статус задачи - " + status + ";";
     }
 
     public void setStatus(Status status) {
@@ -53,6 +51,10 @@ public class Task {
 
     public Status getStatus() {
         return status;
+    }
+
+    public TaskType getType() {
+        return TaskType.TASK;
     }
 }
 

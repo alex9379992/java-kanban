@@ -23,5 +23,8 @@ public class Epic extends Task {
         return subtaskData;
     }
 
-
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
 }

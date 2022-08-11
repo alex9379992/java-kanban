@@ -13,10 +13,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
    @Override
    public List<Task> getHistory() {
-       return getTask();
+       return getTasks();
    }
 
-    private List<Task> getTask() {
+    private List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         Node oldHead = head;
         tasks.add(head.data);
