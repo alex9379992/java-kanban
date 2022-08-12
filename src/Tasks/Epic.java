@@ -8,6 +8,7 @@ public class Epic extends Task {
 
     public Epic(String name, String description, int id) {
         super(name, description, id);
+        this.type = TaskType.EPIC;
     }
 
     @Override
@@ -21,10 +22,5 @@ public class Epic extends Task {
 
     public HashMap<Integer, Subtask> getSubtaskData() {
         return subtaskData;
-    }
-
-    @Override
-    public TaskType getType() {
-        return TaskType.EPIC;
     }
 }
