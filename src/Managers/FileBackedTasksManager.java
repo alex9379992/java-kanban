@@ -173,10 +173,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             System.out.println(epics);
             System.out.println(tasks);
             System.out.println(historyManager.getHistory());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerSaveException(e);
         }
     }
 
@@ -185,7 +183,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             try {
                 reader.readLine();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new ManagerSaveException(e);
             }
         }
     }
@@ -215,8 +213,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         manager.getEpic(1);
         System.out.println("");
         List<Task> historyList = manager.getHistory();
-        for (int i = 0; i < historyList.size(); i++) {
-            System.out.println(historyList.get(i));
+        for (Task value : historyList) {
+            System.out.println(value);
         }
     }
 
@@ -224,6 +222,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         File dir = new File("resources\\dataSave.CSV");
         FileBackedTasksManager manager = new FileBackedTasksManager();
         manager.reading(dir);
+    }
+
+   private static class ManagerSaveException extends RuntimeException {
+        public ManagerSaveException(Throwable cause) {
+            super(cause);
+        }
     }
 }
 
