@@ -1,9 +1,7 @@
 package Managers;
 import Interfaces.TaskManager;
-import Tasks.Epic;
-import Tasks.Subtask;
-import Tasks.Task;
-import Tasks.TaskType;
+import Tasks.*;
+
 import java.io.*;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +27,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
-        super.updateTask(task);
+
+    public void updateTask(Task task, Status status) {
+        super.updateTask(task, status);
         save();
     }
 
@@ -100,8 +99,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateSubtask(Subtask subtask, int idEpic) {
-        super.updateSubtask(subtask, idEpic);
+    public void updateSubtask(Subtask subtask, int idEpic, Status status) {
+        super.updateSubtask(subtask, idEpic, status);
         save();
     }
 
