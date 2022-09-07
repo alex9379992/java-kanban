@@ -23,13 +23,15 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
-        Node oldHead = head;
-        tasks.add(head.data);
-        for(int i = 0; i <= nodeData.size(); i++) {
-            if(oldHead.next != null) {
-                oldHead = oldHead.next;
-                if(oldHead.data != null) {
-                    tasks.add(oldHead.data);
+        if(head != null) {
+            Node oldHead = head;
+            tasks.add(head.data);
+            for (int i = 0; i <= nodeData.size(); i++) {
+                if (oldHead.next != null) {
+                    oldHead = oldHead.next;
+                    if (oldHead.data != null) {
+                        tasks.add(oldHead.data);
+                    }
                 }
             }
         }

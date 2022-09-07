@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
+    private final File file;
+    private String fileDir;
+    public FileBackedTasksManager(String file) {
+        fileDir = file;
+        this.file = new File(file);
+    }
+
     public static void main(String[] args) {
         writingToFile(); //работа приложения, при записи в файл.
         readingToFile();   //работа приложения при считывании из файла.
@@ -117,7 +124,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     public void save() {
-        try (Writer fileWriter = new FileWriter("resources/dataSave.CSV")) {
+        try (Writer fileWriter= new FileWriter(fileDir);) {
             fileWriter.write(FormatCSV.recordingFields());
             for (Task task : tasks.values()) {
                 fileWriter.write(FormatCSV.toStringCSV(task));
@@ -138,7 +145,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    private void reading(File file) {
+    public void reading() {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             skipLine(reader);
             while (reader.ready()) {
@@ -154,15 +161,17 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     }
                 } else {
                     String line = reader.readLine();
-                    for (Integer key : FormatCSV.historyFromString(line)) {
-                        if (tasks.containsKey(key)) {
-                            historyManager.addTask(tasks.get(key));
-                        } else if (epics.containsKey(key)) {
-                            historyManager.addTask(epics.get(key));
-                        } else {
-                            for (Epic epic : epics.values()) {
-                                if (epic.getSubtaskData().containsKey(key)) {
-                                    historyManager.addTask(epic.getSubtaskData().get(key));
+                    if (line != null) {
+                        for (Integer key : FormatCSV.historyFromString(line)) {
+                            if (tasks.containsKey(key)) {
+                                historyManager.addTask(tasks.get(key));
+                            } else if (epics.containsKey(key)) {
+                                historyManager.addTask(epics.get(key));
+                            } else {
+                                for (Epic epic : epics.values()) {
+                                    if (epic.getSubtaskData().containsKey(key)) {
+                                        historyManager.addTask(epic.getSubtaskData().get(key));
+                                    }
                                 }
                             }
                         }
@@ -171,11 +180,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             }
             System.out.println(epics);
             System.out.println(tasks);
-            System.out.println(historyManager.getHistory());
+            if(historyManager.getHistory().size() != 0) {
+                System.out.println(historyManager.getHistory());
+            }
         } catch (IOException e) {
             throw new ManagerSaveException(e);
         }
     }
+
 
     private void skipLine(BufferedReader reader) {
         for (int i = 0; i < 1; i++) {
@@ -218,9 +230,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     public static void readingToFile() {
-        File dir = new File("resources\\dataSave.CSV");
-        FileBackedTasksManager manager = new FileBackedTasksManager();
-        manager.reading(dir);
+        FileBackedTasksManager manager = new FileBackedTasksManager("resources\\dataSave.CSV");
+        manager.reading();
     }
 
    private static class ManagerSaveException extends RuntimeException {

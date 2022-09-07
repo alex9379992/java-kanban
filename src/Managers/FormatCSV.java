@@ -41,7 +41,7 @@ public class FormatCSV {
             return subtask;
 
         } else {
-            Task task = new Task(values[2], values[3], Integer.parseInt(values[0]));
+            Task task = new Task(values[2], values[4], Integer.parseInt(values[0]));
             return task;
         }
     }
