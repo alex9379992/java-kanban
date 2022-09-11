@@ -26,6 +26,11 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         id = new ID();
     }
 
+    @AfterEach
+    public void afterDelete() {
+        manager.getFile().delete();
+    }
+
 
 
     @Test
@@ -283,7 +288,9 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     @Test
     @DisplayName("Проверка сохранения и чтения с пустым списком задач")
     public void saveAndReadingTest() {
-        manager.reading();
+        final FileBackedTasksManager.ManagerSaveException exception =
+                assertThrows(FileBackedTasksManager.ManagerSaveException.class,
+                        () -> manager.reading());
         final Map<Integer, Epic> epics = manager.getEpics();
         assertEquals(0, epics.size(), "Длинна мапы должна быть 0");
         assertNotNull(epics, "Список не должен быть null");
@@ -307,6 +314,33 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         assertEquals(0, history.size(), "Длинна списка должна быть 0");
     }
 
+    @Test
+    @DisplayName("Проверка записи подзадач в PrioritizedTasks")
+    public void checkAddSubtaskPrioritizedTasksTest() {
+        checkAddSubtaskPrioritizedTasks();
+    }
 
+    @Test
+    @DisplayName("Проверка записи задач в PrioritizedTasks")
+    public void checkAddTaskPrioritizedTasksTest() {
+        checkAddTaskPrioritizedTasks();
+    }
 
+    @Test
+    @DisplayName("Проверка поля Эпика endTime")
+    public void checkFieldEpicTest() {
+        checkFieldEpic();
+    }
+
+    @Test
+    @DisplayName("Проверка поля Subtask")
+    public void checkFieldSubtaskTest() {
+        checkFieldSubtask();
+    }
+
+    @Test
+    @DisplayName("Проверка поля Task")
+    public void checkFieldTaskTest() {
+        checkFieldTask();
+    }
 }

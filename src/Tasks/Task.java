@@ -1,5 +1,8 @@
 package Tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task {
@@ -8,6 +11,19 @@ public class Task {
     protected Integer id;
     protected Status status;
     protected TaskType type;
+    protected LocalDateTime startTime;
+    protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    protected Duration duration;
+
+
+    public Task(String name, String description, int id, String dataTime, long minutes) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = Status.NEW;
+        this.type = TaskType.TASK;
+        setStartTime(dataTime, minutes);
+    }
 
     public Task(String name, String description, int id) {
         this.name = name;
@@ -58,5 +74,22 @@ public class Task {
     public TaskType getType() {
         return type;
     }
-}
 
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getEndTime() {
+         LocalDateTime finishTame = startTime.plus(duration);
+         return finishTame;
+    }
+
+    public void setStartTime(String localTime, long minutes) {
+        this.startTime = LocalDateTime.parse(localTime, formatter);
+        this.duration = Duration.ofMinutes(minutes);
+    }
+}

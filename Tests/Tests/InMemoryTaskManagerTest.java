@@ -2,10 +2,10 @@ package Tests;
 import Managers.ID;
 import Managers.InMemoryTaskManager;
 import Tasks.Epic;
-import Tasks.Status;
-import Tasks.Subtask;
+
 import Tasks.Task;
 import org.junit.jupiter.api.*;
+
 import java.util.List;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
@@ -302,8 +302,44 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         manager.getSubtask(0, 1);
         list = manager.getHistory();
         final int sizeAfter = list.size();
-        assertEquals(1, sizeBefore, "Длинна списка должна быть 1");
-        assertEquals(2, sizeAfter, "Длинна списка должна быть 2");
+        assertEquals(2, sizeBefore, "Длинна списка должна быть 1");
+        assertEquals(3, sizeAfter, "Длинна списка должна быть 2");
         assertNotNull(list, "Список не должен быть null");
+    }
+     @Test
+     @DisplayName("Проверка записи подзадач в PrioritizedTasks")
+     public void checkAddSubtaskPrioritizedTasksTest() {
+        checkAddSubtaskPrioritizedTasks();
+     }
+
+    @Test
+    @DisplayName("Проверка записи задач в PrioritizedTasks")
+    public void checkAddTaskPrioritizedTasksTest() {
+        checkAddTaskPrioritizedTasks();
+    }
+
+
+    @Test
+    @DisplayName("Проверка поля Эпика endTime")
+    public void checkFieldEpicTest() {
+        checkFieldEpic();
+    }
+
+    @Test
+    @DisplayName("Проверка поля Subtask")
+    public void checkFieldSubtaskTest() {
+        checkFieldSubtask();
+    }
+
+    @Test
+    @DisplayName("Проверка поля Task")
+    public void checkFieldTaskTest() {
+        checkFieldTask();
+    }
+
+    @Test
+    @DisplayName("Проверка пересечения времени")
+    public void checkIntersectionTimeTest() {
+        checkIntersectionTime();
     }
 }

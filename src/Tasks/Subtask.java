@@ -1,6 +1,9 @@
 package Tasks;
 
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
 
     private final int idEpic;
@@ -10,6 +13,15 @@ public class Subtask extends Task {
         this.idEpic = idEpic;
         this.type = TaskType.SUBTASK;
     }
+
+    public Subtask(String name, String taskDescription, int id, int idEpic, String dataTime, long minutes) {
+        super(name, taskDescription, id);
+        this.idEpic = idEpic;
+        this.type = TaskType.SUBTASK;
+        setStartTime(dataTime, minutes);
+    }
+
+
 
     @Override
     public String toString() {
@@ -32,4 +44,5 @@ public class Subtask extends Task {
     public int getIdEpic() {
         return idEpic;
     }
+
 }

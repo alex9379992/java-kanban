@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
-    private String fileDir;
+    private final String fileDir;
     public FileBackedTasksManager(String file) {
         fileDir = file;
         this.file = new File(file);
@@ -234,10 +234,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         manager.reading();
     }
 
-   private static class ManagerSaveException extends RuntimeException {
+   public static class ManagerSaveException extends RuntimeException {
         public ManagerSaveException(Throwable cause) {
             super(cause);
         }
+    }
+
+    public File getFile() {
+        return file;
     }
 }
 

@@ -7,6 +7,7 @@ import Tasks.Task;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 public interface
 TaskManager {
@@ -30,4 +31,7 @@ TaskManager {
      void deleteSubtask(int id, int idEpic);
      void deleteSubtasks(int idEpic);
      List<Task> getHistory();
+     TreeSet<Task> getPrioritizedTasks();
+     void updateTimeEpic(Epic epic);
+     boolean checkTime(Task task);
 }

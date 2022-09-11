@@ -6,4 +6,8 @@ public class ID {
     public int generator() {
         return id++;
     }
+
+    public int getId() {
+        return id;
+    }
 }

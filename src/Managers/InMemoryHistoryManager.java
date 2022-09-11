@@ -10,7 +10,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node tail;
     private  int size = 0;
 
-   private Map<Integer, Node> nodeData = new HashMap<>();
+   private final Map<Integer, Node> nodeData = new HashMap<>();
 
     public int getSize() {
         return size;
@@ -70,6 +70,7 @@ public class InMemoryHistoryManager implements HistoryManager {
    public  void remove(int id){
        Node node = nodeData.get(id);
        removeNode(node);
+       nodeData.remove(id);
    }
 
     private void removeNode(Node node) {
@@ -85,6 +86,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
             if (node.next == null && node.prev != null) {  //если в конце
                 tail = node.prev;
+
                 size--;
             }
             if (node.next == null && node.prev == null) {  //если единственный элемент
@@ -106,30 +108,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         public Node(Node prev, Task data, Node next) {
             this.data = data;
             this.next = next;
-            this.prev = prev;
-        }
-
-        public Task getData() {
-            return data;
-        }
-
-        public void setData(Task data) {
-            this.data = data;
-        }
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
-        }
-
-        public Node getPrev() {
-            return prev;
-        }
-
-        public void setPrev(Node prev) {
             this.prev = prev;
         }
 

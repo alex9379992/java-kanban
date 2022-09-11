@@ -8,6 +8,8 @@ import Tasks.Subtask;
 import Tasks.Task;
 import org.junit.jupiter.api.Assertions;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -18,14 +20,27 @@ abstract class TaskManagerTest<T extends TaskManager> {
     protected ID id;
     protected T manager;
 
+
     protected void initTask() {
         Task task = new Task("Task", "task", id.generator());
+        manager.addNewTask(task);
+    }
+
+    protected void initTaskWithDataTime() {
+        Task task = new Task("Task", "task",
+                id.generator(), "0" + id.getId() + ".01.2019 19:25", 15);
         manager.addNewTask(task);
     }
 
     protected void initEpic() {
         Epic epic = new Epic("Epic", "epic", id.generator());
         manager.addNewEpic(epic);
+    }
+
+    protected void initSubtaskWithDataTime() {
+        Subtask subtask = new Subtask("Subtask", "subtask",
+                id.generator(), manager.getEpic(0).getId(), "0" + id.getId() + ".01.2020 19:25", 31);
+        manager.addNewSubtask(subtask, manager.getEpic(0).getId());
     }
 
     protected void initSubtask() {
@@ -36,8 +51,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     protected void initEpicAndSubtask() {
         initEpic();
-        initSubtask();
-        initSubtask();
+        initSubtaskWithDataTime();
+        initSubtaskWithDataTime();
     }
     protected void getTaskTest() {
         initTask();
@@ -141,7 +156,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
 
     public void updateEpicTest() {
         initEpic();
-        initSubtask(); //При создании сабтаска, автоматически пересчитывается статус эпика
+        initSubtaskWithDataTime(); //При создании сабтаска, автоматически пересчитывается статус эпика
         Status status = manager.getEpic(0).getStatus();
         assertEquals(Status.NEW, status, "Статусы не совпадают");
         manager.updateSubtask(manager.getSubtask(0,1), 0, Status.IN_PROGRESS);
@@ -150,7 +165,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         manager.updateSubtask(manager.getSubtask(0,1), 0, Status.DONE);
         status = manager.getEpic(0).getStatus();
         assertEquals(Status.DONE, status, "Статусы не совпадают");
-        initSubtask();
+        initSubtaskWithDataTime();
         status = manager.getEpic(0).getStatus();
         assertEquals(Status.IN_PROGRESS, status, "Статусы не совпадают");
     }
@@ -302,7 +317,11 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     public void deleteSubtaskTest() {
-        initEpicAndSubtask();
+        initEpic();
+        Subtask subtask1 = new Subtask("Subtask1", "subtask1", id.generator(), 0);
+        manager.addNewSubtask(subtask1, 0);
+        Subtask subtask2 = new Subtask("Subtask2", "subtask2", id.generator(), 0);
+        manager.addNewSubtask(subtask2, 0);
         final int sizeBefore = manager.getSubtasks().size();
         manager.deleteSubtask(1, 0);
         final int sizeAfter = manager.getSubtasks().size();
@@ -351,6 +370,92 @@ abstract class TaskManagerTest<T extends TaskManager> {
         final int sizeAfter = manager.getSubtasks().size();
         assertEquals(0, sizeBefore, "длинна списка подзадач должна быть 0");
         assertEquals(0, sizeAfter, "длинна списка подзадач должна быть 0");
+    }
+
+    public void checkAddSubtaskPrioritizedTasks() {
+        initEpic();
+        initSubtaskWithDataTime();
+        initSubtaskWithDataTime();
+        initSubtaskWithDataTime();
+        Subtask subtask4 = new Subtask("Subtask4", "subtask4", id.generator(), 0);
+        manager.addNewSubtask(subtask4, 0);
+        Subtask subtask5 = new Subtask("Subtask5", "subtask5", id.generator(), 0);
+        manager.addNewSubtask(subtask5, 0);
+        Subtask subtask6 = new Subtask("Subtask6", "subtask6", id.generator(), 0,
+                "01.01.2020 19:25", 31);
+        manager.addNewSubtask(subtask6, manager.getEpic(0).getId());
+        int size = manager.getPrioritizedTasks().size();
+        assertNotNull(manager.getPrioritizedTasks(), "Список не должен быть null");
+        assertFalse(manager.getPrioritizedTasks().isEmpty(), "Список не должен быть пустым");
+        assertEquals(6, size, "Длина списка должна быть 6");
+        assertEquals(subtask6, manager.getPrioritizedTasks().first(), "Первым долден быть Subtask6");
+        assertEquals(subtask5, manager.getPrioritizedTasks().last(), "Последним долден быть Subtask5");
+    }
+
+    public void checkAddTaskPrioritizedTasks() {
+        assertEquals(0, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 0");
+        initTaskWithDataTime();
+        assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
+        initTaskWithDataTime();
+        Task task3 = new Task("Task3", "task3", id.getId());
+        manager.addNewTask(task3);
+        assertEquals(3, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
+        assertEquals(task3, manager.getPrioritizedTasks().last(), "Последним должен быть task3");
+    }
+
+    public void checkFieldEpic() {
+        initEpic();
+        assertNull(manager.getEpic(0).getEndTime(), "Поле должно быть пустым");
+        initSubtask();
+        assertNull(manager.getEpic(0).getEndTime(), "Поле должно быть пустым");
+        initSubtaskWithDataTime();
+        assertNotNull(manager.getEpic(0).getEndTime(), "Поле не должно быть пустым");
+        assertEquals(LocalDateTime.of(2020, 1, 3, 19, 56),
+                manager.getEpic(0).getEndTime(), "Конечная дата должна быть одинакова");
+    }
+
+    public void checkFieldSubtask() {
+        initEpic();
+        initSubtask();
+        assertNull(manager.getSubtask(0, 1).getStartTime(), "Поле должно быть пустым");
+        assertNull(manager.getSubtask(0, 1).getDuration(), "Поле должно быть пустым");
+        Subtask subtask = new Subtask("Subtask", "subtask", id.generator(), 0,
+                "01.01.2020 19:25", 31);
+        manager.addNewSubtask(subtask, 0);
+        assertNotNull(manager.getSubtask(0, 2).getStartTime(), "Поле не должно быть пустым");
+        assertNotNull(manager.getSubtask(0, 2).getDuration(), "Поле не должно быть пустым");
+        assertEquals(2, manager.getPrioritizedTasks().size(), "Длинна списка дожна быть 2");
+        assertEquals(LocalDateTime.of(2020, 1, 1, 19, 25),
+                manager.getSubtask(0, 2).getStartTime(), "Значение должно совпадать");
+        assertEquals(Duration.ofMinutes(31), manager.getSubtask(0, 2).getDuration(), "Значение должно совпадать");
+    }
+
+    public void checkFieldTask() {
+        initTask();
+        assertNull(manager.getTask(0).getStartTime(), "Поле должно быть пустым");
+        assertNull(manager.getTask(0).getDuration(), "Поле должно быть пустым");
+        Task task = new Task("Task", "task", id.generator(),
+                "01.01.2020 19:25", 31);
+        manager.addNewTask(task);
+        assertNotNull(manager.getTask(1).getStartTime(), "Поле не должно быть пустым");
+        assertNotNull(manager.getTask(1).getDuration(), "Поле не должно быть пустым");
+        assertEquals(2, manager.getPrioritizedTasks().size(), "Длинна списка дожна быть 2");
+        assertEquals(LocalDateTime.of(2020, 1, 1, 19, 25),
+                manager.getTask(1).getStartTime(), "Значение должно совпадать");
+        assertEquals(Duration.ofMinutes(31), manager.getTask(1).getDuration(), "Значение должно совпадать");
+    }
+
+    public void checkIntersectionTime() {
+        Task task1 = new Task("Task1", "task1", id.generator(),
+                "01.01.2020 19:25", 31);
+        manager.addNewTask(task1);
+        assertNotNull(manager.getTask(0).getStartTime(), "Поле не должно быть пустым");
+        assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
+        Task task2 = new Task("Task2", "task2", id.generator(),
+                "01.01.2020 19:25", 31);
+        manager.addNewTask(task2);
+        assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
+
     }
 }
 
