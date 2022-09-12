@@ -55,25 +55,30 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addNewTask(Task task) {
+        try {
+            if(task.getStartTime() != null) {
+                if(checkTime(task)) {
+                    tasks.put(task.getId(), task);
+                    prioritizedTasks.add(task);
+                    System.out.println("Задача добавлена под индексом " + task.getId() + ".");
+                    return task.getId();
 
-        if(task.getStartTime() != null) {
-            if(checkTime(task)) {
+                } else {
+                    throw new TimeCrossingException("Обнаружено пересечение во времени");
+                }
+            } else {
                 tasks.put(task.getId(), task);
                 prioritizedTasks.add(task);
                 System.out.println("Задача добавлена под индексом " + task.getId() + ".");
                 return task.getId();
-
-            } else {
-                System.out.println("Найдено пересечение во времени задач");
             }
-        } else {
-            tasks.put(task.getId(), task);
-            prioritizedTasks.add(task);
-            System.out.println("Задача добавлена под индексом " + task.getId() + ".");
-            return task.getId();
+
+        } catch (TimeCrossingException e) {
+            System.out.println(e.getMessage());
         }
         return -1;
     }
+
 
     @Override
     public void updateTask(Task task, Status status) {
@@ -197,9 +202,21 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public int addNewSubtask(Subtask subtask, int idEpic) {
-        if(epics.containsKey(idEpic)) {
-            if(subtask.getStartTime() != null) {
-                if(checkTime(subtask)) {
+        try {
+            if(epics.containsKey(idEpic)) {
+                if(subtask.getStartTime() != null) {
+                    if(checkTime(subtask)) {
+                        epics.get(idEpic).getSubtaskData().put(subtask.getId(), subtask);
+                        System.out.println("Подзадача " + subtask.getName() + ", с индексом " + subtask.getId() +
+                                ", добавлена в " + epics.get(idEpic).getName());
+                        updateEpic(epics.get(idEpic));
+                        updateTimeEpic(epics.get(idEpic));
+                        prioritizedTasks.add(subtask);
+                        return subtask.getId();
+                    } else {
+                        throw new TimeCrossingException("Обнаружено пересечение во времени");
+                    }
+                } else {
                     epics.get(idEpic).getSubtaskData().put(subtask.getId(), subtask);
                     System.out.println("Подзадача " + subtask.getName() + ", с индексом " + subtask.getId() +
                             ", добавлена в " + epics.get(idEpic).getName());
@@ -207,20 +224,13 @@ public class InMemoryTaskManager implements TaskManager {
                     updateTimeEpic(epics.get(idEpic));
                     prioritizedTasks.add(subtask);
                     return subtask.getId();
-                } else {
-                    System.out.println("Обнаружено пересечение во времени");
                 }
             } else {
-                epics.get(idEpic).getSubtaskData().put(subtask.getId(), subtask);
-                System.out.println("Подзадача " + subtask.getName() + ", с индексом " + subtask.getId() +
-                    ", добавлена в " + epics.get(idEpic).getName());
-                updateEpic(epics.get(idEpic));
-                updateTimeEpic(epics.get(idEpic));
-                prioritizedTasks.add(subtask);
-                return subtask.getId();
+                System.out.println("Ненашлось эпика с таким id");
             }
+        } catch (TimeCrossingException e) {
+            System.out.println(e.getMessage());
         }
-        System.out.println("Ненашлось эпика с таким id");
         return -1;
     }
 
@@ -317,5 +327,11 @@ public class InMemoryTaskManager implements TaskManager {
         }
 
     return false;
+    }
+
+    public static class TimeCrossingException extends Exception {
+        public TimeCrossingException(String message) {
+            super(message);
+        }
     }
 }

@@ -2,11 +2,14 @@ package Tests;
 
 import Managers.ID;
 import Interfaces.TaskManager;
+import Managers.InMemoryTaskManager;
 import Tasks.Epic;
 import Tasks.Status;
 import Tasks.Subtask;
 import Tasks.Task;
+import Managers.InMemoryTaskManager.TimeCrossingException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.function.Executable;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -454,7 +457,9 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
         final Task task2 = new Task("Task2", "task2", id.generator(),
                 LocalDateTime.of(2020, 1, 1, 19, 25), 31);
-        manager.addNewTask(task2);
+        final TimeCrossingException exception =  assertThrows(TimeCrossingException.class,
+                () -> manager.addNewTask(task2));
+                assertEquals("Обнаружено пересечение во времени", exception.getMessage());
         assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
 
     }
