@@ -12,11 +12,10 @@ public class Task {
     protected Status status;
     protected TaskType type;
     protected LocalDateTime startTime;
-    protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     protected Duration duration;
 
 
-    public Task(String name, String description, int id, String dataTime, long minutes) {
+    public Task(String name, String description, int id, LocalDateTime dataTime, long minutes) {
         this.name = name;
         this.description = description;
         this.id = id;
@@ -84,12 +83,11 @@ public class Task {
     }
 
     public LocalDateTime getEndTime() {
-         LocalDateTime finishTame = startTime.plus(duration);
-         return finishTame;
+        return startTime.plus(duration);
     }
 
-    public void setStartTime(String localTime, long minutes) {
-        this.startTime = LocalDateTime.parse(localTime, formatter);
+    public void setStartTime(LocalDateTime dateTime, long minutes) {
+        this.startTime = dateTime;
         this.duration = Duration.ofMinutes(minutes);
     }
 }

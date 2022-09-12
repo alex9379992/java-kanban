@@ -1,7 +1,4 @@
 package Tasks;
-
-
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Subtask extends Task {
@@ -14,7 +11,7 @@ public class Subtask extends Task {
         this.type = TaskType.SUBTASK;
     }
 
-    public Subtask(String name, String taskDescription, int id, int idEpic, String dataTime, long minutes) {
+    public Subtask(String name, String taskDescription, int id, int idEpic, LocalDateTime dataTime, long minutes) {
         super(name, taskDescription, id);
         this.idEpic = idEpic;
         this.type = TaskType.SUBTASK;

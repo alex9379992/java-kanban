@@ -18,10 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager> {
 
-    private String fileDir = "resources\\testFile.CSV";
-
     @BeforeEach
     public void setUp() {
+        String fileDir = "resources\\testFile.CSV";
         manager =  new FileBackedTasksManager(fileDir);
         id = new ID();
     }
@@ -300,8 +299,7 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
     @DisplayName("Проверка сохранения и чтения с пустым списком истории")
     public void saveAndReadingTestEmptyHistoryList() {
         initTask();
-        final Map<Integer, Task> tasks = new HashMap<>();
-        tasks.putAll(manager.getTasks());
+        final Map<Integer, Task> tasks = new HashMap<>(manager.getTasks());
         assertNotNull(tasks, "Мапа не должна быть null");
         assertEquals(1, tasks.size(), "Длинна мапы должна быть 1");
         manager.getTasks().clear();

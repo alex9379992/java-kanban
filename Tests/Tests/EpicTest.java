@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EpicTest {
-    private InMemoryTaskManager manager = new InMemoryTaskManager();
+    private final InMemoryTaskManager manager = new InMemoryTaskManager();
 
     private Epic epic;
     private ID id;
