@@ -13,10 +13,10 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EpicTest {
-    InMemoryTaskManager manager = new InMemoryTaskManager();
+    private InMemoryTaskManager manager = new InMemoryTaskManager();
 
-    Epic epic;
-    ID id;
+    private Epic epic;
+    private ID id;
 
     @BeforeEach
     public void beforeEach() {
@@ -27,9 +27,9 @@ class EpicTest {
     @Test
     @DisplayName("Проверка расчета с спустым списком")
     public void checkStatusWhenTheListIsEmpty() {
-        int listSize = epic.getSubtaskData().size();
+        final int listSize = epic.getSubtaskData().size();
         assertEquals(0, listSize, " Длинна списка должна быть 0");
-        Status status = epic.getStatus();
+        final Status status = epic.getStatus();
         assertEquals(Status.NEW, status, "статус долже быть NEW");
     }
 
@@ -37,10 +37,10 @@ class EpicTest {
     @DisplayName("Проверка расчета статуса на NEW")
     public void checkStatusWhenSubtasksStatusNew() {
         for (int i = 2; i <= 4; i++) {
-            Subtask subtask = new Subtask("Подзадача" + i, "подзадача" + i, id.generator(), epic.getId());
+            final Subtask subtask = new Subtask("Подзадача" + i, "подзадача" + i, id.generator(), epic.getId());
             epic.getSubtaskData().put(subtask.getId(), subtask);
         }
-        Status status = epic.getStatus();
+        final Status status = epic.getStatus();
         assertEquals(Status.NEW, status, "статус долже быть NEW");
     }
 
@@ -49,7 +49,7 @@ class EpicTest {
     public void checkStatusWhenSubtasksStatusDone() {
         epic.getSubtaskData().putAll(addSubtasks(Status.DONE));
         manager.updateEpic(epic);
-        Status status = epic.getStatus();
+        final Status status = epic.getStatus();
         assertEquals(Status.DONE, status, "статус долже быть DONE");
     }
 
@@ -59,7 +59,7 @@ class EpicTest {
         epic.getSubtaskData().putAll(addSubtasks(Status.DONE));
         epic.getSubtaskData().putAll(addSubtasks(Status.NEW));
         manager.updateEpic(epic);
-        Status status = epic.getStatus();
+        final Status status = epic.getStatus();
         assertEquals(Status.IN_PROGRESS, status, "статус долже быть IN_PROGRESS");
     }
 
@@ -68,14 +68,14 @@ class EpicTest {
     public void checkStatusWhenSubtasksStatusProgress() {
         epic.getSubtaskData().putAll(addSubtasks(Status.IN_PROGRESS));
         manager.updateEpic(epic);
-        Status status = epic.getStatus();
+        final Status status = epic.getStatus();
         assertEquals(Status.IN_PROGRESS, status, "статус долже быть IN_PROGRESS");
     }
 
     private HashMap<Integer, Subtask> addSubtasks(Status status) {
         HashMap<Integer, Subtask> subtaskHashMap = new HashMap<>();
         for (int i = 0; i < 2; i++) {
-            Subtask subtask = new Subtask("Подзадача" + i, "подзадача" + i, id.generator(), epic.getId());
+            final Subtask subtask = new Subtask("Подзадача" + i, "подзадача" + i, id.generator(), epic.getId());
             subtask.setStatus(status);
             subtaskHashMap.put(subtask.getId(), subtask);
         }

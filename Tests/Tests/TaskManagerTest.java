@@ -397,7 +397,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         initTaskWithDataTime();
         assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
         initTaskWithDataTime();
-        Task task3 = new Task("Task3", "task3", id.getId());
+        final Task task3 = new Task("Task3", "task3", id.getId());
         manager.addNewTask(task3);
         assertEquals(3, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
         assertEquals(task3, manager.getPrioritizedTasks().last(), "Последним должен быть task3");
@@ -419,7 +419,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         initSubtask();
         assertNull(manager.getSubtask(0, 1).getStartTime(), "Поле должно быть пустым");
         assertNull(manager.getSubtask(0, 1).getDuration(), "Поле должно быть пустым");
-        Subtask subtask = new Subtask("Subtask", "subtask", id.generator(), 0,
+        final Subtask subtask = new Subtask("Subtask", "subtask", id.generator(), 0,
                 "01.01.2020 19:25", 31);
         manager.addNewSubtask(subtask, 0);
         assertNotNull(manager.getSubtask(0, 2).getStartTime(), "Поле не должно быть пустым");
@@ -434,7 +434,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         initTask();
         assertNull(manager.getTask(0).getStartTime(), "Поле должно быть пустым");
         assertNull(manager.getTask(0).getDuration(), "Поле должно быть пустым");
-        Task task = new Task("Task", "task", id.generator(),
+        final Task task = new Task("Task", "task", id.generator(),
                 "01.01.2020 19:25", 31);
         manager.addNewTask(task);
         assertNotNull(manager.getTask(1).getStartTime(), "Поле не должно быть пустым");
@@ -446,12 +446,12 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     public void checkIntersectionTime() {
-        Task task1 = new Task("Task1", "task1", id.generator(),
+        final Task task1 = new Task("Task1", "task1", id.generator(),
                 "01.01.2020 19:25", 31);
         manager.addNewTask(task1);
         assertNotNull(manager.getTask(0).getStartTime(), "Поле не должно быть пустым");
         assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
-        Task task2 = new Task("Task2", "task2", id.generator(),
+        final Task task2 = new Task("Task2", "task2", id.generator(),
                 "01.01.2020 19:25", 31);
         manager.addNewTask(task2);
         assertEquals(1, manager.getPrioritizedTasks().size(), "Длинна списка должна быть 1");
