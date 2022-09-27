@@ -1,5 +1,7 @@
 package Managers;
 import Interfaces.TaskManager;
+import Managers.Auxiliary.FormatCSV;
+import Managers.Auxiliary.ID;
 import Tasks.*;
 
 import java.io.*;
@@ -29,7 +31,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     @Override
     public int addNewTask(Task task) {
         int idTask = super.addNewTask(task);
-        save();
+        this.save();
         return idTask;
     }
 
@@ -123,7 +125,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         save();
     }
 
-    public void save() {
+    protected void save() {
         try (Writer fileWriter= new FileWriter(fileDir);) {
             fileWriter.write(FormatCSV.recordingFields());
             for (Task task : tasks.values()) {
@@ -242,6 +244,23 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public File getFile() {
         return file;
+    }
+
+    protected Task findTask(Integer id) {
+        final Task task = tasks.get(id);
+        if(task != null) {
+            return task;
+        }
+
+        for(Epic epic : epics.values()) {
+            if(epic.getSubtaskData().containsKey(id)) {
+                Subtask subtask = epic.getSubtaskData().get(id);
+                if(subtask != null) {
+                    return subtask;
+                }
+            }
+        }
+        return epics.get(id);
     }
 }
 

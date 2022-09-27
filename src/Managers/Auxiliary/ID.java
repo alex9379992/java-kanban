@@ -1,4 +1,4 @@
-package Managers;
+package Managers.Auxiliary;
 
 public class ID {
     private int id = 0;

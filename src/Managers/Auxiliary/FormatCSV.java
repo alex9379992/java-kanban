@@ -1,4 +1,4 @@
-package Managers;
+package Managers.Auxiliary;
 import Interfaces.HistoryManager;
 import Tasks.Epic;
 import Tasks.Subtask;

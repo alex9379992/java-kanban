@@ -1,7 +1,7 @@
 package Tests;
 
 import Interfaces.TaskManager;
-import Managers.ID;
+import Managers.Auxiliary.ID;
 import Managers.InMemoryTaskManager;
 import Tasks.Task;
 import org.junit.jupiter.api.BeforeEach;

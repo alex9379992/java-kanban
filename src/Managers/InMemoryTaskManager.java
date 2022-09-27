@@ -18,19 +18,16 @@ public class InMemoryTaskManager implements TaskManager {
     protected Map<Integer, Epic> epics = new HashMap<>();
     protected Map<Integer, Task> tasks = new HashMap<>();
 
-    protected TreeSet<Task> prioritizedTasks = new TreeSet<>(new Comparator<Task>() {
-        @Override
-        public int compare(Task task1, Task task2) {
-            if (task1.getStartTime() == null || task2.getStartTime() == null) {
-                return task1.getId() - task2.getId();
+    protected TreeSet<Task> prioritizedTasks = new TreeSet<>((task1, task2) -> {
+        if (task1.getStartTime() == null || task2.getStartTime() == null) {
+            return task1.getId() - task2.getId();
+        } else {
+            if (task1.getStartTime().isBefore(task2.getStartTime())) {
+                return -1;
+            } else if (task2.getStartTime().isBefore(task1.getStartTime())) {
+                return 1;
             } else {
-                if (task1.getStartTime().isBefore(task2.getStartTime())) {
-                    return -1;
-                } else if (task2.getStartTime().isBefore(task1.getStartTime())) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                return 0;
             }
         }
     });
@@ -67,10 +64,14 @@ public class InMemoryTaskManager implements TaskManager {
                     throw new TimeCrossingException("Обнаружено пересечение во времени");
                 }
             } else {
-                tasks.put(task.getId(), task);
-                prioritizedTasks.add(task);
-                System.out.println("Задача добавлена под индексом " + task.getId() + ".");
-                return task.getId();
+                if(!tasks.containsKey(task.getId())) {
+                    tasks.put(task.getId(), task);
+                    prioritizedTasks.add(task);
+                    System.out.println("Задача добавлена под индексом " + task.getId() + ".");
+                    return task.getId();
+                } else {
+                    return -1;
+                }
             }
 
         } catch (TimeCrossingException e) {

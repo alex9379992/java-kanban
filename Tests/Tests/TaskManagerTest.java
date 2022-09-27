@@ -1,15 +1,13 @@
 package Tests;
 
-import Managers.ID;
+import Managers.Auxiliary.ID;
 import Interfaces.TaskManager;
-import Managers.InMemoryTaskManager;
 import Tasks.Epic;
 import Tasks.Status;
 import Tasks.Subtask;
 import Tasks.Task;
 import Managers.InMemoryTaskManager.TimeCrossingException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.function.Executable;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -19,6 +17,10 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class TaskManagerTest<T extends TaskManager> {
+    protected Task task;
+    protected Epic epic;
+    protected Subtask subtask1;
+    protected Subtask subtask2;
 
     protected ID id;
     protected T manager;
