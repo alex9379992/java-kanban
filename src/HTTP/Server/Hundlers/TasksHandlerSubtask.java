@@ -2,11 +2,14 @@ package HTTP.Server.Hundlers;
 
 import Tasks.Epic;
 import Tasks.Subtask;
+import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import static HTTP.Server.HttpTaskServer.*;
 import static HTTP.Server.Hundlers.TasksHandlerTask.idFromQuery;
@@ -26,7 +29,8 @@ public class TasksHandlerSubtask implements HttpHandler {
                     if(stringSplit.length == 4 && stringSplit[3].contains("epic")) {
                         String[] findEpicID = stringSplit[3].split("=");
                         int id = idFromQuery(findEpicID[1]);
-                        stringJson = gson.toJson(manager.getEpicSubtasks(id));
+                        final Type subtasksEpic = new TypeToken<Map<Integer, Subtask>>() {}.getType();
+                        stringJson = gson.toJson(manager.getEpicSubtasks(id), subtasksEpic);
                     } else if (stringPath.length == 1 && stringPath[0].equals("subtask")) {
                         stringJson = gson.toJson(manager.getSubtasks());
                     } else if (stringPath.length == 2 && stringPath[0].equals("subtask?id")) {
@@ -79,12 +83,19 @@ public class TasksHandlerSubtask implements HttpHandler {
                     } else if (stringPath[0].contains("?")) {
                         int id = idFromQuery(stringPath[1]);
                         if(id != -1) {
+                            boolean isDelete = false;
                             for (Epic epic : manager.getEpics().values()) {
                                 if (epic.getSubtaskData().containsKey(id)) {
-                                    manager.getSubtask(epic.getId(), id);
+                                    manager.deleteSubtask(id, epic.getId());
+                                    isDelete = true;
                                 }
+                            }
+                            if(isDelete) {
                                 stringJson = "Задача под индексом " + id + " успешно удалена.";
                                 exchange.sendResponseHeaders(200, 0);
+                            }else {
+                                exchange.sendResponseHeaders(400, 0);
+                                stringJson = "Задача под индексом " + id + " не удалена.";
                             }
                         } else {
                             exchange.sendResponseHeaders(400, 0);

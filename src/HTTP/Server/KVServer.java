@@ -152,4 +152,8 @@ public class KVServer {
     public String getValue(String key) {
         return data.get(key);
     }
+
+    public void removeData() {
+        data.clear();
+    }
 }

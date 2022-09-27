@@ -13,12 +13,8 @@ public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
 
     @Override
     public void write(JsonWriter jsonWriter, LocalDateTime dateTime) throws IOException {
-        if (Objects.isNull(dateTime)) {
-
-        } else {
             LocalDateTime value = Objects.nonNull(dateTime) ? dateTime : LocalDateTime.now();
             jsonWriter.value(value.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        }
     }
 
     @Override

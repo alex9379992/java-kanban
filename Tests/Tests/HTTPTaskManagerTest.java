@@ -17,7 +17,10 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class HTTPTaskManagerTest extends TaskManagerTest<HTTPTaskManager>{
     private KVServer kvServer;
@@ -56,13 +59,15 @@ class HTTPTaskManagerTest extends TaskManagerTest<HTTPTaskManager>{
     void save() {
         manager.save();
         String value = kvServer.getValue("task");
+        final Type taskType =  new TypeToken<Map<Integer, Task>>(){}.getType();
+        Map<Integer, Task> tasks = gson.fromJson(value, taskType);
+        assertNotNull(tasks);
+        assertEquals("Задача1", tasks.get(0).getName());
 
     }
 
     @Test
     void reading() {
-
         manager.reading();
-        manager.getTask(task.getId());
     }
 }

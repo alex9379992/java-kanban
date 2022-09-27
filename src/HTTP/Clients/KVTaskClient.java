@@ -35,13 +35,12 @@ public class KVTaskClient {
     }
 
     public String load(String key) {
-
+        try {
           HttpClient httpClient = HttpClient.newHttpClient();
           HttpRequest build = HttpRequest.newBuilder()
                   .uri(URI.create(url + "load/" + key + "?API_TOKEN=" + apiToken))
                   .GET()
                   .build();
-      try {
           HttpResponse<String> response = httpClient.send(build, HttpResponse.BodyHandlers.ofString());
           return response.body();
           } catch (IOException | InterruptedException e) { // обработка ошибки отправки запроса

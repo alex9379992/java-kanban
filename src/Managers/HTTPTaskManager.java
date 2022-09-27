@@ -23,9 +23,9 @@ public class HTTPTaskManager extends FileBackedTasksManager {
     private final KVTaskClient client;
     private final Gson gson;
     private final Type taskType =  new TypeToken<Map<Integer, Task>>(){}.getType();
-    private final Type epicType = new TypeToken<ArrayList<Epic>>() {}.getType();
+    private final Type epicType = new TypeToken<Map<Integer, Epic>>() {}.getType();
     private final Type subtaskType = new TypeToken<ArrayList<Subtask>>() {}.getType();
-    private final Type historyType = new TypeToken<ArrayList<Integer>>() {}.getType();
+    private final Type historyType = new TypeToken<List<Integer>>() {}.getType();
 
     public HTTPTaskManager(int port) throws KVTaskClient.ManagerSaveException {
         super("resources/dataSave.CSV");
@@ -35,19 +35,12 @@ public class HTTPTaskManager extends FileBackedTasksManager {
 
     @Override
     public void save() {
-        final Type taskType =  new TypeToken<Map<Integer, Task>>(){}.getType();
 
-        String taskJson = gson.toJson(getTasks(), taskType);
-        client.put(TASKS_KEY, taskJson);
-
-
-        String epicJson = gson.toJson(getEpics());
-        client.put(EPICS_KEY, epicJson);
-
+        client.put(TASKS_KEY, gson.toJson(this.tasks));
+        client.put(EPICS_KEY, gson.toJson(this.epics));
 
         String subtaskJson = gson.toJson(getSubtasks());
         client.put(SUBTASKS_KEY, subtaskJson);
-
 
         List<Integer> history = getHistory().stream()
                 .map(Task::getId)
@@ -61,9 +54,9 @@ public class HTTPTaskManager extends FileBackedTasksManager {
 
         Type taskType =  new TypeToken<Map<Integer, Task>>(){}.getType();
         Map<Integer, Task> tasks = gson.fromJson(client.load(TASKS_KEY), taskType);
+        this.tasks.putAll(tasks);
 
-
-        ArrayList<Subtask> subtasks = gson.fromJson(client.load(SUBTASKS_KEY), subtaskType);
+        List<Subtask> subtasks = gson.fromJson(client.load(SUBTASKS_KEY), subtaskType);
         subtasks.forEach(subtask -> {
             int id = subtask.getId();
             int epicId = subtask.getIdEpic();
@@ -71,16 +64,13 @@ public class HTTPTaskManager extends FileBackedTasksManager {
             this.prioritizedTasks.add(subtask);
         });
 
-        ArrayList<Epic> epics = gson.fromJson(client.load(EPICS_KEY), epicType);
-        epics.forEach(epic -> {
-            int id = epic.getId();
-            this.epics.put(id, epic);
-            prioritizedTasks.add(epic);
-        });
+        Map<Integer, Epic> epics = gson.fromJson(client.load(EPICS_KEY), epicType);
+        this.epics.putAll(epics);
 
         ArrayList<Integer> history = gson.fromJson(client.load(HISTORY_KEY), historyType);
         for(Integer id : history) {
             historyManager.addTask(findTask(id));
         }
+
     }
 }
