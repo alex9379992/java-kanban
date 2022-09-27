@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,7 +52,6 @@ public class HTTPTaskManager extends FileBackedTasksManager {
     @Override
     public void reading() {
 
-        Type taskType =  new TypeToken<Map<Integer, Task>>(){}.getType();
         Map<Integer, Task> tasks = gson.fromJson(client.load(TASKS_KEY), taskType);
         this.tasks.putAll(tasks);
 
@@ -71,6 +70,5 @@ public class HTTPTaskManager extends FileBackedTasksManager {
         for(Integer id : history) {
             historyManager.addTask(findTask(id));
         }
-
     }
 }

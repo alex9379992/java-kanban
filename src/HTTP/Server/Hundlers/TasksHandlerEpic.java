@@ -14,7 +14,7 @@ import static HTTP.Server.Hundlers.TasksHandlerTask.idFromQuery;
 
 public class TasksHandlerEpic implements HttpHandler {
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
 
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().toString();

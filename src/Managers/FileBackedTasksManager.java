@@ -126,7 +126,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     protected void save() {
-        try (Writer fileWriter= new FileWriter(fileDir);) {
+        try (Writer fileWriter= new FileWriter(fileDir)) {
             fileWriter.write(FormatCSV.recordingFields());
             for (Task task : tasks.values()) {
                 fileWriter.write(FormatCSV.toStringCSV(task));
@@ -224,7 +224,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         manager.getSubtask(epic1.getId(), 2);
         manager.getEpic(5);
         manager.getEpic(1);
-        System.out.println("");
         List<Task> historyList = manager.getHistory();
         for (Task value : historyList) {
             System.out.println(value);

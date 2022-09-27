@@ -320,14 +320,10 @@ public class InMemoryTaskManager implements TaskManager {
                 }
 
             }
-            if(sizeTimeNull == tasks.size()) {
-                return true;
-            }
+            return sizeTimeNull == tasks.size();
         } else {
             return true;
         }
-
-    return false;
     }
 
     public static class TimeCrossingException extends Exception {

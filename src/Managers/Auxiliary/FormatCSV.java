@@ -34,15 +34,12 @@ public class FormatCSV {
     public static Task fromString(String value){
         String[] values = value.split(",");
         if(values[1].equals("EPIC")) {
-            Epic epic = new Epic(values[2], values[3], Integer.parseInt(values[0]));
-            return epic;
+            return new Epic(values[2], values[3], Integer.parseInt(values[0]));
         } else if (values[1].equals("SUBTASK")) {
-            Subtask subtask = new Subtask(values[2], values[4], Integer.parseInt(values[0]), Integer.parseInt(values[5]));
-            return subtask;
+            return new Subtask(values[2], values[4], Integer.parseInt(values[0]), Integer.parseInt(values[5]));
 
         } else {
-            Task task = new Task(values[2], values[4], Integer.parseInt(values[0]));
-            return task;
+            return new Task(values[2], values[4], Integer.parseInt(values[0]));
         }
     }
 

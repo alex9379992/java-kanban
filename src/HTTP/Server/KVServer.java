@@ -4,18 +4,12 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import Managers.Managers;
-import Tasks.Epic;
-import Tasks.Subtask;
-import Tasks.Task;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -151,9 +145,5 @@ public class KVServer {
 
     public String getValue(String key) {
         return data.get(key);
-    }
-
-    public void removeData() {
-        data.clear();
     }
 }
